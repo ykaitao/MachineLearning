@@ -4,13 +4,9 @@
 </script>
 -->
 
-<h1 style="text-align: center; font-size: 2em;">Theory of popular Machine Learning algorithms</h1>
+# Theory of popular Machine Learning algorithms
 
-<p style="text-align: center;">
-  Author: <a href="https://www.linkedin.com/in/kaitaoyang/" target="_blank">Kaitao Yang</a>, founder of  
-  <a href="https://dlapplied.com/deep-learning-training/" target="_blank">DL-APPLIED</a>, VP of Machine Learning at  
-  <a href="https://www.epicorebiosystems.com/" target="_blank">Epicore Biosystems, Inc.</a>
-</p>
+Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-APPLIED](https://dlapplied.com/deep-learning-training/), VP of Machine Learning at [Epicore Biosystems, Inc.](https://www.epicorebiosystems.com/)
 
 <h1>Table of Contents<span class="tocSkip"></span></h1>
 <div class="toc"><ul class="toc-item"><li><span><a href="#Notation" data-toc-modified-id="Notation-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Notation</a></span></li><li><span><a href="#Linear-models" data-toc-modified-id="Linear-models-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Linear models</a></span><ul class="toc-item"><li><span><a href="#Linear-regression" data-toc-modified-id="Linear-regression-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Linear regression</a></span></li><li><span><a href="#Logistic-regression-(for-classification)" data-toc-modified-id="Logistic-regression-(for-classification)-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Logistic regression (for classification)</a></span></li><li><span><a href="#Maximum-entropy-model-(for-classification)" data-toc-modified-id="Maximum-entropy-model-(for-classification)-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>Maximum entropy model (for classification)</a></span></li></ul></li><li><span><a href="#Support-vector-machine-(SVM)" data-toc-modified-id="Support-vector-machine-(SVM)-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Support vector machine (SVM)</a></span><ul class="toc-item"><li><span><a href="#Linear-SVM-in-linearly-separable-case-(hard-margin)" data-toc-modified-id="Linear-SVM-in-linearly-separable-case-(hard-margin)-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Linear SVM in linearly separable case (hard margin)</a></span></li><li><span><a href="#Linear-SVM-(soft-margin)" data-toc-modified-id="Linear-SVM-(soft-margin)-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Linear SVM (soft margin)</a></span></li><li><span><a href="#Non-linear-SVM-(kernel-tricks)" data-toc-modified-id="Non-linear-SVM-(kernel-tricks)-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Non-linear SVM (kernel tricks)</a></span></li></ul></li><li><span><a href="#Decision-trees" data-toc-modified-id="Decision-trees-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Decision trees</a></span></li><li><span><a href="#Boosting" data-toc-modified-id="Boosting-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Boosting</a></span><ul class="toc-item"><li><span><a href="#Adaboost-for-binary-classification" data-toc-modified-id="Adaboost-for-binary-classification-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Adaboost for binary classification</a></span></li><li><span><a href="#Adaboost-for-regresion" data-toc-modified-id="Adaboost-for-regresion-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Adaboost for regresion</a></span></li><li><span><a href="#Gradient-boosting" data-toc-modified-id="Gradient-boosting-5.3"><span class="toc-item-num">5.3&nbsp;&nbsp;</span>Gradient boosting</a></span></li></ul></li><li><span><a href="#Naive-Bayes-for-classification" data-toc-modified-id="Naive-Bayes-for-classification-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Naive Bayes for classification</a></span><ul class="toc-item"><li><span><a href="#Train" data-toc-modified-id="Train-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Train</a></span><ul class="toc-item"><li><span><a href="#P(Y)" data-toc-modified-id="P(Y)-6.1.1"><span class="toc-item-num">6.1.1&nbsp;&nbsp;</span>P(Y)</a></span></li><li><span><a href="#P(X|Y)-for-discrete-X" data-toc-modified-id="P(X|Y)-for-discrete-X-6.1.2"><span class="toc-item-num">6.1.2&nbsp;&nbsp;</span>P(X|Y) for discrete X</a></span><ul class="toc-item"><li><span><a href="#Avoid-zero-value-of-probability" data-toc-modified-id="Avoid-zero-value-of-probability-6.1.2.1"><span class="toc-item-num">6.1.2.1&nbsp;&nbsp;</span>Avoid zero value of probability</a></span></li></ul></li><li><span><a href="#P(X|Y)-for-continuous-X" data-toc-modified-id="P(X|Y)-for-continuous-X-6.1.3"><span class="toc-item-num">6.1.3&nbsp;&nbsp;</span>P(X|Y) for continuous X</a></span></li></ul></li><li><span><a href="#Test" data-toc-modified-id="Test-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Test</a></span></li></ul></li><li><span><a href="#EM-algorithm" data-toc-modified-id="EM-algorithm-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>EM algorithm</a></span><ul class="toc-item"><li><span><a href="#Gaussian-Mixture-Model-(GMM)-using-EM" data-toc-modified-id="Gaussian-Mixture-Model-(GMM)-using-EM-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Gaussian Mixture Model (GMM) using EM</a></span></li></ul></li><li><span><a href="#Variance-bias-tradeoff" data-toc-modified-id="Variance-bias-tradeoff-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Variance-bias tradeoff</a></span></li></ul></div>
@@ -412,7 +408,7 @@ $$
 
 $$
 \begin{aligned}
-P(X^{(j)}&=x^{(j)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
+P(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
 &j=1,2,\dots,J_d,\\
 &k=1,2,\dots,K_j\\
 where:\\
@@ -426,7 +422,7 @@ $$
 
 $$
 \begin{aligned}
-P_{\lambda}(X^{(j)}&=x^{(j)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)+\lambda}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)+C\lambda},\lambda>0
+P_{\lambda}(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)+\lambda}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)+C\lambda},\lambda>0
 \end{aligned}
 $$
 
@@ -447,7 +443,7 @@ $$
 
 $$
 \begin{aligned}
-y=arg \max_{c}P(Y=c)\prod_{j=1}^{J_d}P(X^{(j)}&=x^{(j)}|Y=c)\prod_{j=1}^{J_c}P(X^{(j)}&=x^{(j)}|Y=c)
+y=arg \max_{c}P(Y=c)\prod_{j=1}^{J_d}\prod_{k=1}^{K_j}P(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)\prod_{j=1}^{J_c}P(X^{(j)}&=x^{(j)}|Y=c)
 \end{aligned}
 $$
 
