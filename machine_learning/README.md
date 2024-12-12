@@ -8,11 +8,34 @@
 
 Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-APPLIED](https://dlapplied.com/deep-learning-training/), VP of Machine Learning at [Epicore Biosystems, Inc.](https://www.epicorebiosystems.com/)
 
-<h1>Table of Contents<span class="tocSkip"></span></h1>
-<div class="toc"><ul class="toc-item"><li><span><a href="#Notation" data-toc-modified-id="Notation-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Notation</a></span></li><li><span><a href="#Linear-models" data-toc-modified-id="Linear-models-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Linear models</a></span><ul class="toc-item"><li><span><a href="#Linear-regression" data-toc-modified-id="Linear-regression-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Linear regression</a></span></li><li><span><a href="#Logistic-regression-(for-classification)" data-toc-modified-id="Logistic-regression-(for-classification)-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Logistic regression (for classification)</a></span></li><li><span><a href="#Maximum-entropy-model-(for-classification)" data-toc-modified-id="Maximum-entropy-model-(for-classification)-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>Maximum entropy model (for classification)</a></span></li></ul></li><li><span><a href="#Support-vector-machine-(SVM)" data-toc-modified-id="Support-vector-machine-(SVM)-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Support vector machine (SVM)</a></span><ul class="toc-item"><li><span><a href="#Linear-SVM-in-linearly-separable-case-(hard-margin)" data-toc-modified-id="Linear-SVM-in-linearly-separable-case-(hard-margin)-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Linear SVM in linearly separable case (hard margin)</a></span></li><li><span><a href="#Linear-SVM-(soft-margin)" data-toc-modified-id="Linear-SVM-(soft-margin)-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Linear SVM (soft margin)</a></span></li><li><span><a href="#Non-linear-SVM-(kernel-tricks)" data-toc-modified-id="Non-linear-SVM-(kernel-tricks)-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Non-linear SVM (kernel tricks)</a></span></li></ul></li><li><span><a href="#Decision-trees" data-toc-modified-id="Decision-trees-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Decision trees</a></span></li><li><span><a href="#Boosting" data-toc-modified-id="Boosting-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Boosting</a></span><ul class="toc-item"><li><span><a href="#Adaboost-for-binary-classification" data-toc-modified-id="Adaboost-for-binary-classification-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Adaboost for binary classification</a></span></li><li><span><a href="#Adaboost-for-regresion" data-toc-modified-id="Adaboost-for-regresion-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Adaboost for regresion</a></span></li><li><span><a href="#Gradient-boosting" data-toc-modified-id="Gradient-boosting-5.3"><span class="toc-item-num">5.3&nbsp;&nbsp;</span>Gradient boosting</a></span></li></ul></li><li><span><a href="#Naive-Bayes-for-classification" data-toc-modified-id="Naive-Bayes-for-classification-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Naive Bayes for classification</a></span><ul class="toc-item"><li><span><a href="#Train" data-toc-modified-id="Train-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Train</a></span><ul class="toc-item"><li><span><a href="#P(Y)" data-toc-modified-id="P(Y)-6.1.1"><span class="toc-item-num">6.1.1&nbsp;&nbsp;</span>P(Y)</a></span></li><li><span><a href="#P(X|Y)-for-discrete-X" data-toc-modified-id="P(X|Y)-for-discrete-X-6.1.2"><span class="toc-item-num">6.1.2&nbsp;&nbsp;</span>P(X|Y) for discrete X</a></span><ul class="toc-item"><li><span><a href="#Avoid-zero-value-of-probability" data-toc-modified-id="Avoid-zero-value-of-probability-6.1.2.1"><span class="toc-item-num">6.1.2.1&nbsp;&nbsp;</span>Avoid zero value of probability</a></span></li></ul></li><li><span><a href="#P(X|Y)-for-continuous-X" data-toc-modified-id="P(X|Y)-for-continuous-X-6.1.3"><span class="toc-item-num">6.1.3&nbsp;&nbsp;</span>P(X|Y) for continuous X</a></span></li></ul></li><li><span><a href="#Test" data-toc-modified-id="Test-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Test</a></span></li></ul></li><li><span><a href="#EM-algorithm" data-toc-modified-id="EM-algorithm-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>EM algorithm</a></span><ul class="toc-item"><li><span><a href="#Gaussian-Mixture-Model-(GMM)-using-EM" data-toc-modified-id="Gaussian-Mixture-Model-(GMM)-using-EM-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Gaussian Mixture Model (GMM) using EM</a></span></li></ul></li><li><span><a href="#Variance-bias-tradeoff" data-toc-modified-id="Variance-bias-tradeoff-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Variance-bias tradeoff</a></span></li></ul></div>
+# Table of Contents
 
-- [LaTeX introduction](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
-- [LaTex mathematical espressions](https://www.overleaf.com/learn/latex/Mathematical_expressions)
+- [Theory of popular Machine Learning algorithms](#theory-of-popular-machine-learning-algorithms)
+- [Table of Contents](#table-of-contents)
+- [Notation](#notation)
+- [Linear models](#linear-models)
+  - [Linear regression](#linear-regression)
+  - [Logistic regression (for classification)](#logistic-regression-for-classification)
+  - [Maximum entropy model (for classification)](#maximum-entropy-model-for-classification)
+- [Support vector machine (SVM)](#support-vector-machine-svm)
+  - [Linear SVM in linearly separable case (hard margin)](#linear-svm-in-linearly-separable-case-hard-margin)
+  - [Linear SVM (soft margin)](#linear-svm-soft-margin)
+  - [Non-linear SVM (kernel tricks)](#non-linear-svm-kernel-tricks)
+- [Decision trees](#decision-trees)
+- [Boosting](#boosting)
+  - [Adaboost for binary classification](#adaboost-for-binary-classification)
+  - [Adaboost for regresion](#adaboost-for-regresion)
+  - [Gradient boosting](#gradient-boosting)
+- [Naive Bayes for classification](#naive-bayes-for-classification)
+  - [Train](#train)
+    - [P(Y)](#py)
+    - [P(X|Y) for discrete X](#pxy-for-discrete-x)
+      - [Avoid zero value of probability](#avoid-zero-value-of-probability)
+    - [P(X|Y) for continuous X](#pxy-for-continuous-x)
+  - [Test](#test)
+- [EM algorithm](#em-algorithm)
+  - [Gaussian Mixture Model (GMM) using EM](#gaussian-mixture-model-gmm-using-em)
+- [Variance-bias tradeoff](#variance-bias-tradeoff)
 
 # Notation
 
