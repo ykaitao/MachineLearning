@@ -1,6 +1,16 @@
-<center><font size="5">Theroy of popular Machine Learning algorithms</font></center>
+<!-- For local preview with Markdown Preview Enhanced
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+-->
 
-<center>Author: <a href="https://www.linkedin.com/in/kaitaoyang/" target="_blank">Kaitao Yang</a>, founder of  <a href="https://dlapplied.com/deep-learning-training/" target="_blank">DL-APPLIED</a></center>
+<h1 style="text-align: center; font-size: 2em;">Theory of popular Machine Learning algorithms</h1>
+
+<p style="text-align: center;">
+  Author: <a href="https://www.linkedin.com/in/kaitaoyang/" target="_blank">Kaitao Yang</a>, founder of  
+  <a href="https://dlapplied.com/deep-learning-training/" target="_blank">DL-APPLIED</a>, VP of Machine Learning at  
+  <a href="https://www.epicorebiosystems.com/" target="_blank">Epicore Biosystems, Inc.</a>
+</p>
 
 <h1>Table of Contents<span class="tocSkip"></span></h1>
 <div class="toc"><ul class="toc-item"><li><span><a href="#Notation" data-toc-modified-id="Notation-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Notation</a></span></li><li><span><a href="#Linear-models" data-toc-modified-id="Linear-models-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Linear models</a></span><ul class="toc-item"><li><span><a href="#Linear-regression" data-toc-modified-id="Linear-regression-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Linear regression</a></span></li><li><span><a href="#Logistic-regression-(for-classification)" data-toc-modified-id="Logistic-regression-(for-classification)-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Logistic regression (for classification)</a></span></li><li><span><a href="#Maximum-entropy-model-(for-classification)" data-toc-modified-id="Maximum-entropy-model-(for-classification)-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>Maximum entropy model (for classification)</a></span></li></ul></li><li><span><a href="#Support-vector-machine-(SVM)" data-toc-modified-id="Support-vector-machine-(SVM)-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Support vector machine (SVM)</a></span><ul class="toc-item"><li><span><a href="#Linear-SVM-in-linearly-separable-case-(hard-margin)" data-toc-modified-id="Linear-SVM-in-linearly-separable-case-(hard-margin)-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Linear SVM in linearly separable case (hard margin)</a></span></li><li><span><a href="#Linear-SVM-(soft-margin)" data-toc-modified-id="Linear-SVM-(soft-margin)-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Linear SVM (soft margin)</a></span></li><li><span><a href="#Non-linear-SVM-(kernel-tricks)" data-toc-modified-id="Non-linear-SVM-(kernel-tricks)-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Non-linear SVM (kernel tricks)</a></span></li></ul></li><li><span><a href="#Decision-trees" data-toc-modified-id="Decision-trees-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Decision trees</a></span></li><li><span><a href="#Boosting" data-toc-modified-id="Boosting-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Boosting</a></span><ul class="toc-item"><li><span><a href="#Adaboost-for-binary-classification" data-toc-modified-id="Adaboost-for-binary-classification-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Adaboost for binary classification</a></span></li><li><span><a href="#Adaboost-for-regresion" data-toc-modified-id="Adaboost-for-regresion-5.2"><span class="toc-item-num">5.2&nbsp;&nbsp;</span>Adaboost for regresion</a></span></li><li><span><a href="#Gradient-boosting" data-toc-modified-id="Gradient-boosting-5.3"><span class="toc-item-num">5.3&nbsp;&nbsp;</span>Gradient boosting</a></span></li></ul></li><li><span><a href="#Naive-Bayes-for-classification" data-toc-modified-id="Naive-Bayes-for-classification-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Naive Bayes for classification</a></span><ul class="toc-item"><li><span><a href="#Train" data-toc-modified-id="Train-6.1"><span class="toc-item-num">6.1&nbsp;&nbsp;</span>Train</a></span><ul class="toc-item"><li><span><a href="#P(Y)" data-toc-modified-id="P(Y)-6.1.1"><span class="toc-item-num">6.1.1&nbsp;&nbsp;</span>P(Y)</a></span></li><li><span><a href="#P(X|Y)-for-discrete-X" data-toc-modified-id="P(X|Y)-for-discrete-X-6.1.2"><span class="toc-item-num">6.1.2&nbsp;&nbsp;</span>P(X|Y) for discrete X</a></span><ul class="toc-item"><li><span><a href="#Avoid-zero-value-of-probability" data-toc-modified-id="Avoid-zero-value-of-probability-6.1.2.1"><span class="toc-item-num">6.1.2.1&nbsp;&nbsp;</span>Avoid zero value of probability</a></span></li></ul></li><li><span><a href="#P(X|Y)-for-continuous-X" data-toc-modified-id="P(X|Y)-for-continuous-X-6.1.3"><span class="toc-item-num">6.1.3&nbsp;&nbsp;</span>P(X|Y) for continuous X</a></span></li></ul></li><li><span><a href="#Test" data-toc-modified-id="Test-6.2"><span class="toc-item-num">6.2&nbsp;&nbsp;</span>Test</a></span></li></ul></li><li><span><a href="#EM-algorithm" data-toc-modified-id="EM-algorithm-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>EM algorithm</a></span><ul class="toc-item"><li><span><a href="#Gaussian-Mixture-Model-(GMM)-using-EM" data-toc-modified-id="Gaussian-Mixture-Model-(GMM)-using-EM-7.1"><span class="toc-item-num">7.1&nbsp;&nbsp;</span>Gaussian Mixture Model (GMM) using EM</a></span></li></ul></li><li><span><a href="#Variance-bias-tradeoff" data-toc-modified-id="Variance-bias-tradeoff-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Variance-bias tradeoff</a></span></li></ul></div>
@@ -24,7 +34,6 @@ $$
 &w \cdot x\quad & \text{inner product between two vectors: w and x.}\\
 \end{aligned}
 $$
-
 
 # Linear models
 
@@ -60,8 +69,11 @@ P(Y=c|X=x)&=softmax\left(f_{w_c,b_c}(x)\right)\\
 $$
 
 # Support vector machine (SVM)
+
 ## Linear SVM in linearly separable case (hard margin)
+
 The distance $d_n$ from each data point $(x_n, y_n), n=1,2,\dots,N$ to the hyperplane $w\cdot x+b=0$ is as follows (we need to maximize these distances):
+
 $$
 \begin{aligned}
 d_n&=\frac{|w\cdot x_n+b|}{||w||}, n=1,2,\dots,N\\
@@ -70,6 +82,7 @@ d_n&=\frac{|w\cdot x_n+b|}{||w||}, n=1,2,\dots,N\\
 $$
 
 Which is equivalent to:
+
 $$
 \begin{aligned}
 &\min_{w, b}\; \frac{1}{2}||w||^2\\
@@ -78,14 +91,15 @@ $$
 $$
 
 Whose Lagrange form is:
+
 $$
 \begin{aligned}
-&\max_\alpha\; \min_{w, b}\; L(w, b, \alpha)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(w\cdot x_n+b)],\\ 
+&\max_\alpha\; \min_{w, b}\; L(w, b, \alpha)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(w\cdot x_n+b)],\\
 &s.t.\; \alpha_n\geq0, \;n=1,2,\dots,N.
 \end{aligned}
 $$
 
-Solve $\min_{w,b}$ 
+Solve $\min_{w,b}$
 
 $$
 \begin{aligned}
@@ -94,7 +108,7 @@ $$
 \end{aligned}
 $$
 
-Solve $\max_{\alpha}$ 
+Solve $\max_{\alpha}$
 
 $$
 \begin{aligned}
@@ -113,14 +127,15 @@ $$
 $$
 
 Whose Lagrange form is:
+
 $$
 \begin{aligned}
-&\max_{\alpha,\mu}\; \min_{w, b, \xi}\; L(w, b, \xi, \alpha, \mu)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(w\cdot x_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\ 
+&\max_{\alpha,\mu}\; \min_{w, b, \xi}\; L(w, b, \xi, \alpha, \mu)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(w\cdot x_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\
 &s.t.\; \alpha_n\geq0,\; \mu_n\geq0,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
-Solve $\min_{w,b,\xi}$ 
+Solve $\min_{w,b,\xi}$
 
 $$
 \begin{aligned}
@@ -130,7 +145,7 @@ $$
 \end{aligned}
 $$
 
-Solve $\max_{\alpha}$ 
+Solve $\max_{\alpha}$
 
 $$
 \begin{aligned}
@@ -161,6 +176,7 @@ $$
 $$
 
 Kernel examples:
+
 $$
 \begin{aligned}
 &K(x_n, x_{n'}) = (x_n \cdot x_{n'} + 1)^p\; (Polynomial)\\
@@ -171,9 +187,10 @@ $$
 # Decision trees
 
 The **entropy** at one node (the smaller, the purer):
+
 $$
 \begin{aligned}
-&Ent(D)=-\sum_{c=1}^{C}p_clog_2p_c\;where\\ 
+&Ent(D)=-\sum_{c=1}^{C}p_clog_2p_c\;where\\
 &D\text{ is the data points of the node.}\\
 &C\text{ is the number of classes of }D\\
 &p_c\text{ is the ratio of class c in }D
@@ -181,6 +198,7 @@ $$
 $$
 
 The **information gain** after splitting by attribute $a$ (ID3):
+
 $$
 \begin{aligned}
 &Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)\;where\\
@@ -189,6 +207,7 @@ $$
 $$
 
 The **information gain ratio** after splitting by attribute $a$ (C4.5):
+
 $$
 \begin{aligned}
 &Gain_{ratio}(D,a)=\frac{Gain(D,a)}{-\sum_{v=1}^{V}p_v log_2 p_v}\;where\\
@@ -197,6 +216,7 @@ $$
 $$
 
 The **Gini** at one node (the smaller, the purer):
+
 $$
 \begin{aligned}
 &Gini(D)=1-\sum_{c=1}^{C}p_c^2
@@ -204,6 +224,7 @@ $$
 $$
 
 The **Gini index** after splitting by attribute $a$ (CART):
+
 $$
 \begin{aligned}
 &Gini_{index}(D,a)=\sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)
@@ -222,6 +243,7 @@ where\; b_m(x)\in\{-1,1\}
 $$
 
 Exponential loss:
+
 $$
 \begin{aligned}
 L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(x_n))},\; y\in\{-1,1\}\\
@@ -275,7 +297,7 @@ $$
 &=
 \begin{cases}
     \frac{\bar{w}_{m-1,n}}{2(1-\epsilon_m^*)}, & \text{if } y_n=b_m^*(x_n)\\
-    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(x_n)  
+    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(x_n)
 \end{cases}
 \end{aligned}
 $$
@@ -290,6 +312,7 @@ where\; b_m(x)\text{ is a regressor.}
 $$
 
 Square loss:
+
 $$
 \begin{aligned}
 L(b_m) &= \sum_{n=1}^{N}[y_n-f_m(x_n)]^2\\
@@ -310,7 +333,9 @@ $$
 $$
 
 ## Gradient boosting
+
 Reference
+
 - [XGBoost: A scalable tree boosting system](https://www.kdd.org/kdd2016/papers/files/rfp0697-chenAemb.pdf)
 
 $$
@@ -321,6 +346,7 @@ where\; b_m(x)\text{ is a regression tree.}
 $$
 
 General loss:
+
 $$
 \begin{aligned}
 L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(x_n)+b_m(x_n))+\Omega(b_m),\; where\\
@@ -345,6 +371,7 @@ L(b_m) &\approx \sum_{n=1}^{N}[l(y_n,f_{m-1}(x_n)+g_{m-1, n}b_m(x_n)+\frac{1}{2}
 $$
 
 Solution:
+
 $$
 \begin{aligned}
 &\nabla_{v_{m,t}} L(b_m) = \sum_{n\in R_t}g_{m-1, n}+v_{m,t}(\sum_{n\in R_t}h_{m-1, n}+\lambda)=0\\
@@ -354,40 +381,49 @@ $$
 $$
 
 Loss reduction after each split ($R=R_L\bigcup R_R$, only binary split):
+
 $$
 \begin{aligned}
 &L_{split}=\frac{1}{2}\left[\frac{(\sum_{n\in R_L}g_{m-1, n})^2}{(\sum_{n\in R_L}h_{m-1, n}+\lambda)}+\frac{(\sum_{n\in R_R}g_{m-1, n})^2}{(\sum_{n\in R_R}h_{m-1, n}+\lambda)}-\frac{(\sum_{n\in R}g_{m-1, n})^2}{(\sum_{n\in R}h_{m-1, n}+\lambda)}\right]-\gamma.
 \end{aligned}
 $$
+
 As long as the loss reduction $L_{split}$ is above some threshold, the split will be conducted.
 
 # Naive Bayes for classification
 
-Reference: 
+Reference:
+
 - [Chapter 3, Machine Learning, Tom M. Mithell](http://www.cs.cmu.edu/~tom/mlbook/NBayesLogReg.pdf)
 
 ## Train
+
 ### P(Y)
+
 $$
 \begin{aligned}
-P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\; where:\\ 
+P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\; where:\\
 &C\text{ is the number of classes.}\\
 &N\text{ is the number of data points for training.}\\
 \end{aligned}
 $$
+
 ### P(X|Y) for discrete X
+
 $$
 \begin{aligned}
 P(X^{(j)}&=x^{(j)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
-&j=1,2,\dots,J_d,\\ 
+&j=1,2,\dots,J_d,\\
 &k=1,2,\dots,K_j\\
-where:\\ 
+where:\\
 &J_d\text{ is the number of discrete attributes}\\
 &K_j\text{ is the number of unique values of attribute }x^{(j)}\\
 &\mathbb{X}^j\text{ is the value set of attribute }x^{(j)}
 \end{aligned}
 $$
+
 #### Avoid zero value of probability
+
 $$
 \begin{aligned}
 P_{\lambda}(X^{(j)}&=x^{(j)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)+\lambda}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)+C\lambda},\lambda>0
@@ -395,11 +431,12 @@ P_{\lambda}(X^{(j)}&=x^{(j)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\math
 $$
 
 ### P(X|Y) for continuous X
+
 $$
 \begin{aligned}
 P(X^{(j)}&=x^{(j)}|Y=c)={\mathcal {N}}(x^{(j)}; \mu_{jc} ,\sigma_{jc} ^{2}),\\
 &j=1,2,\dots,J_c,\\
-where:\\ 
+where:\\
 &J_c\text{ is the number of continuous attributes}\\
 &\mu_{jc}=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)x_n^{(j)}\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
 &\sigma_{jc}^2=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)(x_n^{(j)}-\mu_{jc})^2\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
@@ -407,6 +444,7 @@ where:\\
 $$
 
 ## Test
+
 $$
 \begin{aligned}
 y=arg \max_{c}P(Y=c)\prod_{j=1}^{J_d}P(X^{(j)}&=x^{(j)}|Y=c)\prod_{j=1}^{J_c}P(X^{(j)}&=x^{(j)}|Y=c)
@@ -428,6 +466,7 @@ Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|Y,\theta^{(t)})}[logP(Y,Z|\theta^{(
 $$
 
 Derive Q function from log likelihood:
+
 $$
 \begin{aligned}
 L(\theta^{(t+1)})&=logP(Y|\theta^{(t+1)})\\
@@ -453,6 +492,7 @@ L(\theta^{(t+1)})-L(\theta^{(t)})&=log\sum_ZP(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+
 $$
 
 We define:
+
 $$
 \begin{aligned}
 B(\theta^{(t+1)},\theta^{(t)})&=L(\theta^{(t)})+\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})P(Y|\theta^{(t)})}\\
@@ -460,6 +500,7 @@ B(\theta^{(t+1)},\theta^{(t)})&=L(\theta^{(t)})+\sum_ZP(Z|Y,\theta^{(t)})log\fra
 $$
 
 It can be seen that:
+
 $$
 \begin{aligned}
     L(\theta^{(t+1)})\geq B(\theta^{(t+1)},\theta^{(t)})
@@ -496,6 +537,7 @@ where\\
 $$
 
 Latent variable
+
 $$
 \begin{aligned}
 Z_{nk}=
@@ -507,6 +549,7 @@ Z_{nk}=
 $$
 
 Conditional distribution of $Z_{nk}$
+
 $$
 \begin{aligned}
 P(Z_{nk}=1|y_n,\theta^{(t)})&=P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\\
@@ -515,6 +558,7 @@ P(Z_{nk}=1|y_n,\theta^{(t)})&=P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)}
 $$
 
 Log likelihood
+
 $$
 \begin{aligned}
 log P(Y, Z|\theta^{(t+1)})&=log P(y_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
@@ -527,6 +571,7 @@ log P(Y, Z|\theta^{(t+1)})&=log P(y_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
 $$
 
 Q function
+
 $$
 \begin{aligned}
 Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|y_n,\theta^{(t)})}log P(Y, Z|\theta^{(t+1)})\\
@@ -539,6 +584,7 @@ Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|y_n,\theta^{(t)})}log P(Y, Z|\
 $$
 
 Whose Lagrange form is:
+
 $$
 \begin{aligned}
 Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
@@ -548,6 +594,7 @@ Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1
 $$
 
 Solution
+
 $$
 \begin{aligned}
 &\nabla_{\alpha_k^{(t+1)}}Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{a_k^{(t+1)}}+\lambda=0
@@ -555,6 +602,7 @@ $$
 $$
 
 Make use of $\sum_{k=1}^{K}a_k^{(t+1)}=1$, we get:
+
 $$
 \begin{aligned}
 \lambda=-\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
@@ -562,6 +610,7 @@ $$
 $$
 
 Therefore:
+
 $$
 \begin{aligned}
 \alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
@@ -573,6 +622,7 @@ $$
 $$
 
 Similarly:
+
 $$
 \begin{aligned}
 \mu_k^{(t+1)}=\frac
@@ -598,11 +648,14 @@ $$
 $$
 
 # Variance-bias tradeoff
+
 **Reference:**
+
 - [Cornell lectures](https://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/)
 - [Bias-Variance Tradeoff Explained](https://blog.insightdatascience.com/bias-variance-tradeoff-explained-fa2bc28174c4)
 
 Decomposition of Expected Test Error
+
 $$
 \begin{aligned}
 E_{\mathbf{x}\sim X,D\sim \mathbb{D}}&\left[\left[h_{D}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right]^{2}\right] \\
@@ -623,6 +676,7 @@ E_{\mathbf{x}\sim X,D\sim \mathbb{D}}&\left[\left[h_{D}(\mathbf{x}) - (f(\mathbf
 $$
 
 The middle term of the above equation is $0$ as we show below
+
 $$
 \begin{aligned}
 	E_{\mathbf{x}\sim X,D\sim \mathbb{D}}& \left[\left(h_{D}(\mathbf{x}) - \bar{h}(\mathbf{x})\right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right)\right] \\
@@ -635,6 +689,7 @@ $$
 $$
 
 Returning to the earlier expression, we're left with the variance and another term
+
 $$
 \begin{aligned}
 E_{\mathbf{x}\sim X,D\sim \mathbb{D}} &\left[ \left( h_{D}(\mathbf{x}) - (f(\mathbf{x})+\epsilon) \right)^{2} \right] \\
