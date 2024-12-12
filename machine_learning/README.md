@@ -564,7 +564,7 @@ $$
 Therefore:
 $$
 \begin{aligned}
-\alpha_k^{(t+1)*}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
+\alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
 &=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
 &=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}\sum_{k=1}^{K}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
 &=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}1}\\
@@ -575,24 +575,24 @@ $$
 Similarly:
 $$
 \begin{aligned}
-\mu_k^{(t+1)*}=\frac
+\mu_k^{(t+1)}=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)})y_n
+    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})y_n
     }
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)})
+    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
     }
 \end{aligned}
 $$
 
 $$
 \begin{aligned}
-\sigma_k^{(t+1)*}=\frac
+(\sigma_k^{(t+1)})^2=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)})(y_n-\mu_k^{(t)})^2
+    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(y_n-\mu_k^{(t)})^2
     }
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)})
+    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
     }
 \end{aligned}
 $$
