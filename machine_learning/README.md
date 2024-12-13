@@ -1,8 +1,6 @@
-<!-- For local preview with Markdown Preview Enhanced
 <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
--->
 
 # Theory of popular Machine Learning algorithms
 
