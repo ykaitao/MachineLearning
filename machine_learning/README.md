@@ -22,14 +22,14 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
 - [Decision trees](#decision-trees)
 - [Boosting](#boosting)
   - [Adaboost for binary classification](#adaboost-for-binary-classification)
-  - [Adaboost for regresion](#adaboost-for-regresion)
+  - [Adaboost for regression](#adaboost-for-regression)
   - [Gradient boosting](#gradient-boosting)
 - [Naive Bayes for classification](#naive-bayes-for-classification)
   - [Train](#train)
-    - [P(Y)](#py)
-    - [P(X|Y) for discrete X](#pxy-for-discrete-x)
+    - [`P(Y)`](#py)
+    - [`P(X|Y)` for discrete X](#pxy-for-discrete-x)
       - [Avoid zero value of probability](#avoid-zero-value-of-probability)
-    - [P(X|Y) for continuous X](#pxy-for-continuous-x)
+    - [`P(X|Y)` for continuous X](#pxy-for-continuous-x)
   - [Test](#test)
 - [EM algorithm](#em-algorithm)
   - [Gaussian Mixture Model (GMM) using EM](#gaussian-mixture-model-gmm-using-em)
@@ -171,7 +171,7 @@ $$
 \end{aligned}
 $$
 
-Another explaination (hinge loss with L2 regularization):
+Another explanation (hinge loss with L2 regularization):
 
 $$
 \begin{aligned}
@@ -319,7 +319,7 @@ $$
 \end{aligned}
 $$
 
-## Adaboost for regresion
+## Adaboost for regression
 
 $$
 \begin{aligned}
@@ -382,7 +382,7 @@ L(b_m) &\approx \sum_{n=1}^{N}[l(y_n,f_{m-1}(x_n)+g_{m-1, n}b_m(x_n)+\frac{1}{2}
 &= \sum_{n=1}^{N}[g_{m-1, n}b_m(x_n)+\frac{1}{2}h_{m-1, n}b_m^2(x_n)]+\gamma T_m+\frac{1}{2}\lambda||v_m||^2+constant,\;\\
 &\text{where } constant=\sum_{n=1}^{N}l(y_n,f_{m-1}(x_n))\text{ is irrelevant to }b_m\text{, and can be dropped.}\\
 &\approx \sum_{t=1}^{T_m}\left[v_{m,t}\sum_{n\in R_t}g_{m-1, n}+\frac{1}{2}v_{m,t}^2\sum_{n\in R_t}h_{m-1, n}\right]+\gamma T_m+\frac{1}{2}\lambda\sum_{t=1}^{T_m}v_{m,t}^2,\\
-&\text{where } R_t \text{ are those datapoints fall into the leaf node t}.\\
+&\text{where } R_t \text{ are those data points fall into the leaf node t}.\\
 &= \sum_{t=1}^{T_m}\left[v_{m,t}\sum_{n\in R_t}g_{m-1, n}+\frac{1}{2}v_{m,t}^2(\sum_{n\in R_t}h_{m-1, n}+\lambda)\right]+\gamma T_m.
 \end{aligned}
 $$
@@ -415,7 +415,7 @@ Reference:
 
 ## Train
 
-### P(Y)
+### `P(Y)`
 
 $$
 \begin{aligned}
@@ -425,7 +425,7 @@ P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\; where:\\
 \end{aligned}
 $$
 
-### P(X|Y) for discrete X
+### `P(X|Y)` for discrete X
 
 $$
 \begin{aligned}
@@ -447,7 +447,7 @@ P_{\lambda}(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{
 \end{aligned}
 $$
 
-### P(X|Y) for continuous X
+### `P(X|Y)` for continuous X
 
 $$
 \begin{aligned}
@@ -475,7 +475,7 @@ Q function
 $$
 \begin{aligned}
 Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|Y,\theta^{(t)})}[logP(Y,Z|\theta^{(t+1)})], where:\\
-&\theta^{(t+1)}\text{ is the model parameters to be optimised.}\\
+&\theta^{(t+1)}\text{ is the model parameters to be optimized.}\\
 &\theta^{(t)}\text{ is the model parameters of the previous time step.}\\
 &Y\text{ is visible variable.}\\
 &Z\text{ is latent variable.}\\
