@@ -305,10 +305,15 @@ $$
 &=\frac{w_{m-1,n}e^{\beta_m^*(2\mathbf{1}(y_n \neq b_m^*(x_n))-1)}}{Z_{m}}\\
 &=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}e^{-\beta_m^*}}{Z_{m}}\\
 &=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}C}{Z_{m}},\; where\; C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
-&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{j=1}^{N}\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}},\\
-&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
+&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}(y_{n'} \neq b_m^*(x_{n'}))}},\\
+&=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
 \sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}
-},\\
+}, \\
+&\text{making use of }\\
+    &\qquad e^{2\beta_m^*} =e^{2\frac{1}{2}log\frac{1-\epsilon_m^*}{\epsilon_m^*}}=\frac{1-\epsilon_m^*}{\epsilon_m^*}\\
+    &\qquad {\epsilon_m^*}={\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}\\
+    &\qquad {\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1 \\
+    &\qquad {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1-{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}=1-{\epsilon_m^*}\\
 &=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}(y_n \neq b_m^*(x_n))}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
 },\\
 &=
