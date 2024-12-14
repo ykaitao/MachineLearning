@@ -312,7 +312,7 @@ $$
 &\text{making use of }\\
     &\qquad e^{2\beta_m^*} =e^{2\frac{1}{2}log\frac{1-\epsilon_m^*}{\epsilon_m^*}}=\frac{1-\epsilon_m^*}{\epsilon_m^*}\\
     &\qquad {\epsilon_m^*}={\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}\\
-    &\qquad {\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1 \\
+    &\qquad 1 = {\sum_{n}\bar{w}_{m-1,n}} = {\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} \\
     &\qquad {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1-{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}=1-{\epsilon_m^*}\\
 &=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}(y_n \neq b_m^*(x_n))}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
 },\\
@@ -479,10 +479,10 @@ Q function
 
 $$
 \begin{aligned}
-Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|Y,\theta^{(t)})}[logP(Y,Z|\theta^{(t+1)})], where:\\
+Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|X,\theta^{(t)})}[logP(X,Z|\theta^{(t+1)})], where:\\
 &\theta^{(t+1)}\text{ is the model parameters to be optimized.}\\
 &\theta^{(t)}\text{ is the model parameters of the previous time step.}\\
-&Y\text{ is visible variable.}\\
+&X\text{ is visible variable.}\\
 &Z\text{ is latent variable.}\\
 \end{aligned}
 $$
@@ -491,25 +491,25 @@ Derive Q function from log likelihood:
 
 $$
 \begin{aligned}
-L(\theta^{(t+1)})&=logP(Y|\theta^{(t+1)})\\
-&=log\sum_ZP(Y,Z|\theta^{(t+1)})\\
-&=log\sum_ZP(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})\\
+L(\theta^{(t+1)})&=logP(X|\theta^{(t+1)})\\
+&=log\sum_ZP(X,Z|\theta^{(t+1)})\\
+&=log\sum_ZP(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})\\
 \end{aligned}
 $$
 
 $$
 \begin{aligned}
-L(\theta^{(t+1)})-L(\theta^{(t)})&=log\sum_ZP(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})-log(Y|\theta^{(t)})\\
-&=log\sum_ZP(Z|Y,\theta^{(t)})\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})}-log(Y|\theta^{(t)})\\
+L(\theta^{(t+1)})-L(\theta^{(t)})&=log\sum_ZP(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})-log(X|\theta^{(t)})\\
+&=log\sum_ZP(Z|X,\theta^{(t)})\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})}-log(X|\theta^{(t)})\\
 &\text{The convex property of log leads to the following inequality:}\\
-&\geq\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})}-log(Y|\theta^{(t)})\\
-&\text{Make use of }1=\sum_ZP(Z|Y,\theta^{(t)})\\
-&=\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})}-\\
-&\;\;\;\;\;log(P(Y|\theta^{(t)}))\sum_ZP(Z|Y,\theta^{(t)})\\
-&=\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})}-\\
-&\;\;\;\:\sum_ZP(Z|Y,\theta^{(t)})log(P(Y|\theta^{(t)}))\\
-&=\sum_ZP(Z|Y,\theta^{(t)})\left[log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})})-log(P(Y|\theta^{(t)})\right]\\
-&=\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})P(Y|\theta^{(t)})}\\
+&\geq\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})}-log(X|\theta^{(t)})\\
+&\text{Make use of }1=\sum_ZP(Z|X,\theta^{(t)})\\
+&=\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})}-\\
+&\;\;\;\;\;log(P(X|\theta^{(t)}))\sum_ZP(Z|X,\theta^{(t)})\\
+&=\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})}-\\
+&\;\;\;\:\sum_ZP(Z|X,\theta^{(t)})log(P(X|\theta^{(t)}))\\
+&=\sum_ZP(Z|X,\theta^{(t)})\left[log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})})-log(P(X|\theta^{(t)})\right]\\
+&=\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})P(X|\theta^{(t)})}\\
 \end{aligned}
 $$
 
@@ -517,7 +517,7 @@ We define:
 
 $$
 \begin{aligned}
-B(\theta^{(t+1)},\theta^{(t)})&=L(\theta^{(t)})+\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})P(Y|\theta^{(t)})}\\
+B(\theta^{(t+1)},\theta^{(t)})&=L(\theta^{(t)})+\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})P(X|\theta^{(t)})}\\
 \end{aligned}
 $$
 
@@ -536,10 +536,10 @@ Solution:
 $$
 \begin{aligned}
 \theta^{(t+1)*}&=arg \max_{\theta^{(t+1)}}B(\theta^{(t+1)},\theta^{(t)})\\
-&=arg \max_{\theta^{(t+1)}}\left(L(\theta^{(t)})+\sum_ZP(Z|Y,\theta^{(t)})log\frac{P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|Y,\theta^{(t)})P(Y|\theta^{(t)})}\right)\\
+&=arg \max_{\theta^{(t+1)}}\left(L(\theta^{(t)})+\sum_ZP(Z|X,\theta^{(t)})log\frac{P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})}{P(Z|X,\theta^{(t)})P(X|\theta^{(t)})}\right)\\
 &\text{drop those terms which are un-related to } \theta^{(t+1)}\\
-&=arg \max_{\theta^{(t+1)}}\sum_ZP(Z|Y,\theta^{(t)})log\left[P(Y|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})\right]\\
-&=arg \max_{\theta^{(t+1)}}\sum_ZP(Z|Y,\theta^{(t)})logP(Y,Z|\theta^{(t+1)})\\
+&=arg \max_{\theta^{(t+1)}}\sum_ZP(Z|X,\theta^{(t)})log\left[P(X|Z,\theta^{(t+1)})P(Z|\theta^{(t+1)})\right]\\
+&=arg \max_{\theta^{(t+1)}}\sum_ZP(Z|X,\theta^{(t)})logP(X,Z|\theta^{(t+1)})\\
 &=arg \max_{\theta^{(t+1)}}Q(\theta^{(t+1)},\theta^{(t)})
 \end{aligned}
 $$
@@ -548,7 +548,7 @@ $$
 
 $$
 \begin{aligned}
-P(y|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(y|\mu_k, \sigma_k)\\
+P(x|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(x|\mu_k, \sigma_k)\\
 &s.t.\;\sum_{k=1}^{K}a_k=1\\
 where\\
 &K\text{ is the number of Gaussian mixtures.}\\
@@ -574,8 +574,8 @@ Conditional distribution of $Z_{nk}$
 
 $$
 \begin{aligned}
-P(Z_{nk}=1|y_n,\theta^{(t)})&=P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\\
-&=\frac{\alpha_k^{(t)}\phi(y_n|\mu_k^{(t)}, \sigma_k^{(t)})}{\sum_{l=1}^{K}\alpha_l\phi(y_n|\mu_l^{(t)}, \sigma_l^{(t)})}
+P(Z_{nk}=1|x_n,\theta^{(t)})&=P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\\
+&=\frac{\alpha_k^{(t)}\phi(x_n|\mu_k^{(t)}, \sigma_k^{(t)})}{\sum_{l=1}^{K}\alpha_l\phi(x_n|\mu_l^{(t)}, \sigma_l^{(t)})}
 \end{aligned}
 $$
 
@@ -583,12 +583,12 @@ Log likelihood
 
 $$
 \begin{aligned}
-log P(Y, Z|\theta^{(t+1)})&=log P(y_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
-&=log \prod_{n=1}^{N}P(y_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
-&=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]^{Z_{nk}}\\
-&=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}log \alpha_k^{(t+1)}+\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]
+log P(X, Z|\theta^{(t+1)})&=log P(x_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
+&=log \prod_{n=1}^{N}P(x_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
+&=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]^{Z_{nk}}\\
+&=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}log \alpha_k^{(t+1)}+\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]
 \end{aligned}
 $$
 
@@ -596,11 +596,11 @@ Q function
 
 $$
 \begin{aligned}
-Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|y_n,\theta^{(t)})}log P(Y, Z|\theta^{(t+1)})\\
-&=P(Z_{nk}=0|y_n,\theta^{(t)})log P(Y, Z|\theta^{(t+1)})+\\
-&\;\;\;\;P(Z_{nk}=1|y_n,\theta^{(t)})log P(Y, Z|\theta^{(t+1)})\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
-&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
+Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|x_n,\theta^{(t)})}log P(X, Z|\theta^{(t+1)})\\
+&=P(Z_{nk}=0|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})+\\
+&\;\;\;\;P(Z_{nk}=1|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
+&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
 &s.t.\;\sum_{k=1}^{K}a_k^{(t+1)}=1
 \end{aligned}
 $$
@@ -609,8 +609,8 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
-&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(y_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]+\\
+Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
+&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]+\\
 &\;\;\;\;\lambda(\sum_{k=1}^{K}a_k^{(t+1)}-1)
 \end{aligned}
 $$
@@ -619,7 +619,7 @@ Solution
 
 $$
 \begin{aligned}
-&\nabla_{\alpha_k^{(t+1)}}Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{a_k^{(t+1)}}+\lambda=0
+&\nabla_{\alpha_k^{(t+1)}}Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{a_k^{(t+1)}}+\lambda=0
 \end{aligned}
 $$
 
@@ -627,7 +627,7 @@ Make use of $\sum_{k=1}^{K}a_k^{(t+1)}=1$, we get:
 
 $$
 \begin{aligned}
-\lambda=-\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
+\lambda=-\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
 \end{aligned}
 $$
 
@@ -635,11 +635,11 @@ Therefore:
 
 $$
 \begin{aligned}
-\alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}\sum_{k=1}^{K}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}1}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{N}
+\alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}\sum_{k=1}^{K}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}1}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{N}
 \end{aligned}
 $$
 
@@ -649,10 +649,10 @@ $$
 \begin{aligned}
 \mu_k^{(t+1)}=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})y_n
+    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})x_n
     }
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
+    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
     }
 \end{aligned}
 $$
@@ -661,10 +661,10 @@ $$
 \begin{aligned}
 (\sigma_k^{(t+1)})^2=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(y_n-\mu_k^{(t)})^2
+    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(x_n-\mu_k^{(t)})^2
     }
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|y_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
+    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
     }
 \end{aligned}
 $$
