@@ -14,7 +14,7 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
 - [Linear models](#linear-models)
   - [Linear regression](#linear-regression)
   - [Logistic regression (for classification)](#logistic-regression-for-classification)
-  - [Maximum entropy model (for classification)](#maximum-entropy-model-for-classification)
+  - [Softmax regression, or maximum entropy model (for classification)](#softmax-regression-or-maximum-entropy-model-for-classification)
 - [Support vector machine (SVM)](#support-vector-machine-svm)
   - [Linear SVM in linearly separable case (hard margin)](#linear-svm-in-linearly-separable-case-hard-margin)
   - [Linear SVM (soft margin)](#linear-svm-soft-margin)
@@ -58,7 +58,9 @@ $$
 
 $$
 \begin{aligned}
-y&=f_{w,b}(x)\\&=w \cdot x + b
+&y = f(x;{\theta}) = f(x;w,b) = w \cdot x + b \\
+\text{where} \\
+&\theta \text{ represents the model parameters, which include } w \text{ (weights) and } b \text{ (bias).}
 \end{aligned}
 $$
 
@@ -66,22 +68,21 @@ $$
 
 $$
 \begin{aligned}
-&P(Y=c|X=x) =
+P(Y=c|X=x) &=
 \begin{cases}
-    \frac{\exp\left(f_{w_c,b_c}(x)\right)}{1+\sum_{c'=1}^{C-1}\exp\left(f_{w_{c'},b_{c'}}(x)\right)}, & \text{if } c=1,2,\dots,C-1\\
-    \frac{1}{1+\sum_{c'=1}^{C-1}\exp\left(f_{w_{c'},b_{c'}}(x)\right)}, & \text{if } c=C
-\end{cases}\\
-    where\\
-&C\text{ is the number of classes.}
+    \frac{e^{f(x;\theta)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
+    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=C
+\end{cases} \\
+\text{where} \\
+&C \text{ is the number of classes.}
 \end{aligned}
 $$
 
-## Maximum entropy model (for classification)
+## Softmax regression, or maximum entropy model (for classification)
 
 $$
 \begin{aligned}
-P(Y=c|X=x)&=softmax\left(f_{w_c,b_c}(x)\right)\\
-&=\frac{\exp\left(f_{w_c,b_c}(x)\right)}{\sum_{c'=1}^{C}\exp\left(f_{w_{c'},b_{c'}}(x)\right)},\;c=1,2,\dots,C
+P(Y=c|X=x)=\frac{e^{f(x;\theta_c)}}{\sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\;c=1,2,\dots,C
 \end{aligned}
 $$
 
@@ -207,7 +208,8 @@ The **entropy** at one node (the smaller, the purer):
 
 $$
 \begin{aligned}
-&Ent(D)=-\sum_{c=1}^{C}p_clog_2p_c\;where\\
+&Ent(D)=-\sum_{c=1}^{C}p_clog_2p_c\;
+\\ \text{where}\\
 &D\text{ is the data points of the node.}\\
 &C\text{ is the number of classes of }D\\
 &p_c\text{ is the ratio of class c in }D
@@ -218,7 +220,8 @@ The **information gain** after splitting by attribute $a$ (ID3):
 
 $$
 \begin{aligned}
-&Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)\;where\\
+&Gain(D,a)=Ent(D)-\sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)\;\\
+\text{where}\\
 &V\text{ is the number of unique values of attribute }a
 \end{aligned}
 $$
@@ -227,7 +230,8 @@ The **information gain ratio** after splitting by attribute $a$ (C4.5):
 
 $$
 \begin{aligned}
-&Gain_{ratio}(D,a)=\frac{Gain(D,a)}{-\sum_{v=1}^{V}p_v log_2 p_v}\;where\\
+&Gain_{ratio}(D,a)=\frac{Gain(D,a)}{-\sum_{v=1}^{V}p_v log_2 p_v}\;\\
+\text{where}\\
 &p_v=\frac{|D^v|}{|D|}
 \end{aligned}
 $$
@@ -255,7 +259,7 @@ $$
 $$
 \begin{aligned}
 f_M(x)=\sum_{m=1}^{M}\beta_mb_m(x) \\
-where\; b_m(x)\in\{-1,1\}
+\text{where}\; b_m(x)\in\{-1,1\}
 \end{aligned}
 $$
 
@@ -265,14 +269,16 @@ $$
 \begin{aligned}
 L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(x_n))},\; y\in\{-1,1\}\\
 &=\sum_{n=1}^{N}e^{-y_n[f_{m-1}(x_n)+\beta_mb_m(x_n)]}\\
-&=\sum_{n=1}^{N}w_{m-1,n}e^{-y_n\beta_mb_m(x_n)},\; where\; w_{m-1,n}=e^{-y_nf_{m-1}(x_n)}\\
+&=\sum_{n=1}^{N}w_{m-1,n}e^{-y_n\beta_mb_m(x_n)},\; \text{where } w_{m-1,n}=e^{-y_nf_{m-1}(x_n)}\\
 &=\sum_{y_n=b_m(x_n)}w_{m-1,n}e^{-\beta_m}+\sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}\\
 &=\sum_{y_n=b_m(x_n),y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}+
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}-
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}\\
 &=e^{-\beta_m}\sum_{n=1}^{N}w_{m-1,n}+(e^{\beta_m}-e^{-\beta_m})
 \sum_{n=1}^{N}w_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))\\
-&\propto e^{-\beta_m}+(e^{\beta_m}-e^{-\beta_m})\epsilon_m,\;\\ &where\; \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))
+&\propto e^{-\beta_m}+(e^{\beta_m}-e^{-\beta_m})\epsilon_m,\;\\ 
+\text{where }\\
+& \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))
 \end{aligned}
 $$
 
@@ -300,11 +306,11 @@ Proof:
 $$
 \begin{aligned}
 &\bar{w}_{m,n}=\frac{w_{m,n}}{\sum_{n=1}^{N}w_{m,n}},\\
-&=\frac{e^{-y_nf_{m}(x_n)}}{Z_{m}},\; where\; Z_{m}=\sum_{n=1}^{N}w_{m,n}\\
+&=\frac{e^{-y_nf_{m}(x_n)}}{Z_{m}},\; \text{where } Z_{m}=\sum_{n=1}^{N}w_{m,n}\\
 &=\frac{w_{m-1,n}e^{-y_n\beta_m^* b_m^*(x_n)}}{Z_{m}}\\
 &=\frac{w_{m-1,n}e^{\beta_m^*(2\mathbf{1}(y_n \neq b_m^*(x_n))-1)}}{Z_{m}}\\
 &=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}e^{-\beta_m^*}}{Z_{m}}\\
-&=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}C}{Z_{m}},\; where\; C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
+&=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}C}{Z_{m}},\; \text{where } C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
 &=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}(y_{n'} \neq b_m^*(x_{n'}))}},\\
 &=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
 \sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}
@@ -329,7 +335,7 @@ $$
 $$
 \begin{aligned}
 f_M(x)=\sum_{m=1}^{M}b_m(x) \\
-where\; b_m(x)\text{ is a regressor.}
+\text{where } b_m(x)\text{ is a regressor.}
 \end{aligned}
 $$
 
@@ -339,7 +345,7 @@ $$
 \begin{aligned}
 L(b_m) &= \sum_{n=1}^{N}[y_n-f_m(x_n)]^2\\
 &=\sum_{n=1}^{N}[y_n-f_{m-1}(x_n)-b_m(x_n)]^2\\
-&=\sum_{n=1}^{N}[r_{m,n}-b_m(x_n)]^2,\; where\; r_{m,n}=y_n-f_{m-1}(x_n)
+&=\sum_{n=1}^{N}[r_{m,n}-b_m(x_n)]^2,\; \text{where } r_{m,n}=y_n-f_{m-1}(x_n)
 \end{aligned}
 $$
 
@@ -363,7 +369,7 @@ Reference
 $$
 \begin{aligned}
 f_M(x)=\sum_{m=1}^{M}b_m(x) \\
-where\; b_m(x)\text{ is a regression tree.}
+\text{where } b_m(x)\text{ is a regression tree.}
 \end{aligned}
 $$
 
@@ -371,7 +377,8 @@ General loss:
 
 $$
 \begin{aligned}
-L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(x_n)+b_m(x_n))+\Omega(b_m),\; where\\
+L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(x_n)+b_m(x_n))+\Omega(b_m),\\
+\text{where}\\
 &\Omega(b_m)=\gamma T_m+\frac{1}{2}\lambda||v_m||^2\\
 &T_m\text{ is the number of leaf nodes of tree }b_m,\\
 &v_m\text{ is the values of leaf nodes of tree }b_m.
@@ -383,7 +390,7 @@ Make use of Taylar's theorem: $$f(x) \approx f(a)+f'(a)(x-a)+{\frac {f''(a)}{2}}
 $$
 \begin{aligned}
 L(b_m) &\approx \sum_{n=1}^{N}[l(y_n,f_{m-1}(x_n)+g_{m-1, n}b_m(x_n)+\frac{1}{2}h_{m-1, n}b_m^2(x_n)]+\Omega(b_m),\\
-&where\; g_{m-1, n}=\nabla_{f_{m-1}}l(y_n, f_{m-1})，h_{m-1, n}=\nabla^2_{f_{m-1}}l(y_n, f_{m-1})\\
+&\text{where } g_{m-1, n}=\nabla_{f_{m-1}}l(y_n, f_{m-1})，h_{m-1, n}=\nabla^2_{f_{m-1}}l(y_n, f_{m-1})\\
 &= \sum_{n=1}^{N}[g_{m-1, n}b_m(x_n)+\frac{1}{2}h_{m-1, n}b_m^2(x_n)]+\gamma T_m+\frac{1}{2}\lambda||v_m||^2+constant,\;\\
 &\text{where } constant=\sum_{n=1}^{N}l(y_n,f_{m-1}(x_n))\text{ is irrelevant to }b_m\text{, and can be dropped.}\\
 &\approx \sum_{t=1}^{T_m}\left[v_{m,t}\sum_{n\in R_t}g_{m-1, n}+\frac{1}{2}v_{m,t}^2\sum_{n\in R_t}h_{m-1, n}\right]+\gamma T_m+\frac{1}{2}\lambda\sum_{t=1}^{T_m}v_{m,t}^2,\\
@@ -424,7 +431,8 @@ Reference:
 
 $$
 \begin{aligned}
-P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\; where:\\
+P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\\
+\text{where}\\
 &C\text{ is the number of classes.}\\
 &N\text{ is the number of data points for training.}\\
 \end{aligned}
@@ -437,7 +445,7 @@ $$
 P(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
 &j=1,2,\dots,J_d,\\
 &k=1,2,\dots,K_j\\
-where:\\
+\text{where}\\
 &J_d\text{ is the number of discrete attributes}\\
 &K_j\text{ is the number of unique values of attribute }x^{(j)}\\
 &\mathbb{X}^j\text{ is the value set of attribute }x^{(j)}
@@ -458,7 +466,7 @@ $$
 \begin{aligned}
 P(X^{(j)}&=x^{(j)}|Y=c)={\mathcal {N}}(x^{(j)}; \mu_{jc} ,\sigma_{jc} ^{2}),\\
 &j=1,2,\dots,J_c,\\
-where:\\
+\text{where}\\
 &J_c\text{ is the number of continuous attributes}\\
 &\mu_{jc}=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)x_n^{(j)}\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
 &\sigma_{jc}^2=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)(x_n^{(j)}-\mu_{jc})^2\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
@@ -479,7 +487,8 @@ Q function
 
 $$
 \begin{aligned}
-Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|X,\theta^{(t)})}[logP(X,Z|\theta^{(t+1)})], where:\\
+Q(\theta^{(t+1)},\theta^{(t)})&=E_{z\sim P(Z|X,\theta^{(t)})}[logP(X,Z|\theta^{(t+1)})],\\
+\text{where}\\
 &\theta^{(t+1)}\text{ is the model parameters to be optimized.}\\
 &\theta^{(t)}\text{ is the model parameters of the previous time step.}\\
 &X\text{ is visible variable.}\\
@@ -550,7 +559,7 @@ $$
 \begin{aligned}
 P(x|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(x|\mu_k, \sigma_k)\\
 &s.t.\;\sum_{k=1}^{K}a_k=1\\
-where\\
+\text{where}\\
 &K\text{ is the number of Gaussian mixtures.}\\
 &\phi(y|\mu_k, \sigma_k)\text{ is kth Gaussian mixture.}\\
 &\alpha_k\text{ is the coefficient of the kth Gaussian mixture.}\\
@@ -737,3 +746,4 @@ How big is the data-intrinsic noise? This error measures ambiguity due to your d
 	<p>Fig 2: The variation of Bias and Variance with the model complexity. This is similar to the concept of overfitting and underfitting. More complex models overfit while the simplest models underfit.</p>
     </center>
 </blockquote>
+
