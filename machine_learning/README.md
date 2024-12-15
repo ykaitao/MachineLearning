@@ -15,6 +15,7 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
   - [Linear regression](#linear-regression)
   - [Logistic regression (for classification)](#logistic-regression-for-classification)
   - [Softmax regression, or maximum entropy model (for classification)](#softmax-regression-or-maximum-entropy-model-for-classification)
+    - [Proof that softmax regression and logistic regression are equivalent](#proof-that-softmax-regression-and-logistic-regression-are-equivalent)
 - [Support vector machine (SVM)](#support-vector-machine-svm)
   - [Linear SVM in linearly separable case (hard margin)](#linear-svm-in-linearly-separable-case-hard-margin)
   - [Linear SVM (soft margin)](#linear-svm-soft-margin)
@@ -70,7 +71,7 @@ $$
 \begin{aligned}
 P(Y=c|X=x) &=
 \begin{cases}
-    \frac{e^{f(x;\theta)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
+    \frac{e^{f(x;\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
     \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=C
 \end{cases} \\
 \text{where} \\
@@ -83,6 +84,24 @@ $$
 $$
 \begin{aligned}
 P(Y=c|X=x)=\frac{e^{f(x;\theta_c)}}{\sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\;c=1,2,\dots,C
+\end{aligned}
+$$
+
+### Proof that softmax regression and logistic regression are equivalent
+Starts from softmax regression:
+
+$$
+\begin{aligned}
+P(Y=c|X=x)&=\frac{e^{f(x;\theta_c)}}{\sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\\
+&=\frac{e^{-f(x;\theta_C)} e^{f(x;\theta_c)}}{e^{-f(x;\theta_C)} \sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\\
+&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{\sum_{c'=1}^{C}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
+&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{e^{[f(x;\theta_{C})-f(x;\theta_C)]} + \sum_{c'=1}^{C-1}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
+&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{e^{0} + \sum_{c'=1}^{C-1}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
+& f(x;\theta_{c}) \leftarrow f(x;\theta_{c})-f(x;\theta_C)\\
+&=\begin{cases}
+    \frac{e^{f(x;\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
+    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=C
+\end{cases} \\
 \end{aligned}
 $$
 
