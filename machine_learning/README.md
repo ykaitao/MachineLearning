@@ -2,14 +2,12 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
-# Theory of popular Machine Learning algorithms
+<h1>Theory of popular Machine Learning algorithms</h1>
 
 Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-APPLIED](https://dlapplied.com/deep-learning-training/), VP of Machine Learning at [Epicore Biosystems, Inc.](https://www.epicorebiosystems.com/)
 
-# Table of Contents
+<h1> Table of Contents </h1>
 
-- [Theory of popular Machine Learning algorithms](#theory-of-popular-machine-learning-algorithms)
-- [Table of Contents](#table-of-contents)
 - [Notation](#notation)
 - [Linear models](#linear-models)
   - [Linear regression](#linear-regression)
@@ -47,7 +45,7 @@ $$
 &C\quad &\text{ number of classes.}\\
 &R^{m\text{x}n}\quad &\text{ an m-by-n matrix of real numbers.}\\
 &X\quad &\text{ a feature matrix (design matrix) of dimension: }R^{N\text{x}M}\\
-&\mathbf{1}(condition)\quad &\text{ indicator function: 1 if condition is true, 0 otherwise.}\\
+&\mathbf{1}_{\{condition\}}\quad &\text{ indicator function: 1 if condition is true, 0 otherwise.}\\
 &{\mathcal {N}}(x;\mu,\sigma ^{2})\quad & \text{Gaussian distribution with mean and variance: } \mu,\;\sigma^2\\
 &w \cdot x\quad & \text{inner product between two vectors: w and x.}\\
 \end{aligned}
@@ -294,10 +292,10 @@ L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(x_n))},\; y\in\{-1,1\}\\
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}-
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}\\
 &=e^{-\beta_m}\sum_{n=1}^{N}w_{m-1,n}+(e^{\beta_m}-e^{-\beta_m})
-\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))\\
+\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}\\
 &\propto e^{-\beta_m}+(e^{\beta_m}-e^{-\beta_m})\epsilon_m,\;\\ 
 \text{where }\\
-& \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))
+& \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}
 \end{aligned}
 $$
 
@@ -307,7 +305,7 @@ $$
 \begin{aligned}
 &\bar{w}_{0,n}=1/N,\; n=1,2,\dots,N\\
 \text{For m=1, 2, ..., M:}\\
-&\epsilon_m(b_m)=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}(y_n \neq b_m(x_n))\\
+&\epsilon_m(b_m)=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}\\
 &b_m^* = arg \min_{b_m}\epsilon_m(b_m)\\
 &\epsilon_m^*=\epsilon_m(b_m^*)\\
 &\nabla_{\beta_m}L(\beta_m, b_m^*)\propto-1+(e^{2\beta_m}+1)\epsilon_m^*=0\\
@@ -327,11 +325,11 @@ $$
 &\bar{w}_{m,n}=\frac{w_{m,n}}{\sum_{n=1}^{N}w_{m,n}},\\
 &=\frac{e^{-y_nf_{m}(x_n)}}{Z_{m}},\; \text{where } Z_{m}=\sum_{n=1}^{N}w_{m,n}\\
 &=\frac{w_{m-1,n}e^{-y_n\beta_m^* b_m^*(x_n)}}{Z_{m}}\\
-&=\frac{w_{m-1,n}e^{\beta_m^*(2\mathbf{1}(y_n \neq b_m^*(x_n))-1)}}{Z_{m}}\\
-&=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}e^{-\beta_m^*}}{Z_{m}}\\
-&=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}(y_n \neq b_m^*(x_n))}C}{Z_{m}},\; \text{where } C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
-&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}(y_{n'} \neq b_m^*(x_{n'}))}},\\
-&=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}(y_n \neq b_m^*(x_n))}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
+&=\frac{w_{m-1,n}e^{\beta_m^*(2*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}})-1)}}{Z_{m}}\\
+&=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}e^{-\beta_m^*}}{Z_{m}}\\
+&=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}C}{Z_{m}},\; \text{where } C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
+&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}_{\{y_{n'} \neq b_m^*(x_{n'})\}}}},\\
+&=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
 \sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}
 }, \\
 &\text{making use of }\\
@@ -339,7 +337,7 @@ $$
     &\qquad {\epsilon_m^*}={\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}\\
     &\qquad 1 = {\sum_{n}\bar{w}_{m-1,n}} = {\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} \\
     &\qquad {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1-{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}=1-{\epsilon_m^*}\\
-&=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}(y_n \neq b_m^*(x_n))}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
+&=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
 },\\
 &=
 \begin{cases}
@@ -450,7 +448,7 @@ Reference:
 
 $$
 \begin{aligned}
-P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}(y_n=c)}{N},\;c=1,2,\dots,C\\
+P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}_{\{y_n=c\}}}{N},\;c=1,2,\dots,C\\
 \text{where}\\
 &C\text{ is the number of classes.}\\
 &N\text{ is the number of data points for training.}\\
@@ -461,13 +459,13 @@ $$
 
 $$
 \begin{aligned}
-P(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
-&j=1,2,\dots,J_d,\\
-&k=1,2,\dots,K_j\\
-\text{where}\\
-&J_d\text{ is the number of discrete attributes}\\
-&K_j\text{ is the number of unique values of attribute }x^{(j)}\\
-&\mathbb{X}^j\text{ is the value set of attribute }x^{(j)}
+P(X^{(j)} = \mathbb{X}^{(jk)} | Y=c) &= \frac{\sum_{n=1}^{N} \mathbf{1}_{\{x_n^{(j)} = \mathbb{X}^{(jk)}, y_n = c\}}}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n = c\}}}, \\
+&j=1,2,\dots,J_d, \\
+&k=1,2,\dots,K_j \\
+\text{where} \\
+&J_d \text{ is the number of discrete attributes}, \\
+&K_j \text{ is the number of unique values of attribute } x^{(j)}, \\
+&\mathbb{X}^j \text{ is the value set of attribute } x^{(j)}.
 \end{aligned}
 $$
 
@@ -475,7 +473,7 @@ $$
 
 $$
 \begin{aligned}
-P_{\lambda}(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)=\frac{\sum_{n=1}^{N}\mathbf{1}(x_n^{(j)}=\mathbb{X}^{(jk)},y_n=c)+\lambda}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)+C\lambda},\lambda>0
+P_{\lambda}(X^{(j)}=\mathbb{X}^{(jk)}|Y=c) &= \frac{\sum_{n=1}^{N} \mathbf{1}_{\{x_n^{(j)}=\mathbb{X}^{(jk)}, y_n=c\}} + \lambda}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} + K_j \lambda}, \quad \lambda > 0
 \end{aligned}
 $$
 
@@ -483,12 +481,12 @@ $$
 
 $$
 \begin{aligned}
-P(X^{(j)}&=x^{(j)}|Y=c)={\mathcal {N}}(x^{(j)}; \mu_{jc} ,\sigma_{jc} ^{2}),\\
-&j=1,2,\dots,J_c,\\
-\text{where}\\
-&J_c\text{ is the number of continuous attributes}\\
-&\mu_{jc}=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)x_n^{(j)}\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
-&\sigma_{jc}^2=\frac{\sum_{n=1}^{N}\left[\mathbf{1}(y_n=c)(x_n^{(j)}-\mu_{jc})^2\right]}{\sum_{n=1}^{N}\mathbf{1}(y_n=c)},\\
+P(X^{(j)}=x^{(j)}|Y=c) &= {\mathcal {N}}(x^{(j)}; \mu_{jc}, \sigma_{jc}^2), \\
+&j=1,2,\dots,J_c, \\
+\text{where} \\
+&J_c \text{ is the number of continuous attributes}, \\
+&\mu_{jc} = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} x_n^{(j)}}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}, \\
+&\sigma_{jc}^2 = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} (x_n^{(j)} - \mu_{jc})^2}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}.
 \end{aligned}
 $$
 
