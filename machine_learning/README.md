@@ -125,21 +125,21 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-&\max_\alpha\; \min_{w, b}\; L(w, b, \alpha)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(w\cdot x_n+b)],\\
+&\max_\alpha\; \min_{w, b}\; J(w, b, \alpha)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(w\cdot x_n+b)],\\
 &s.t.\; \alpha_n\geq0, \;n=1,2,\dots,N.
 \end{aligned}
 $$
 
-Solve $\min_{w,b}$
+Solve $\min\limits_{w,b}$
 
 $$
 \begin{aligned}
-&\nabla_w L(w, b, \alpha)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
-&\nabla_b L(w, b, \alpha)&=-\sum_{n=1}^{N}\alpha_ny_n=0
+&\nabla_w J(w, b, \alpha)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
+&\nabla_b J(w, b, \alpha)&=-\sum_{n=1}^{N}\alpha_ny_n=0
 \end{aligned}
 $$
 
-Solve $\max_{\alpha}$
+Solve $\max\limits_{\alpha}$
 
 $$
 \begin{aligned}
@@ -161,7 +161,7 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-&\max_{\alpha,\mu}\; \min_{w, b, \xi}\; L(w, b, \xi, \alpha, \mu)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(w\cdot x_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\
+&\max_{\alpha,\mu}\; \min_{w, b, \xi}\; J(w, b, \xi, \alpha, \mu)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(w\cdot x_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\
 &s.t.\; \alpha_n\geq0,\; \mu_n\geq0,\; n=1,2,\dots,N.
 \end{aligned}
 $$
@@ -170,9 +170,9 @@ Solve $\min_{w,b,\xi}$
 
 $$
 \begin{aligned}
-&\nabla_w L(w, b, \xi, \alpha, \mu)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
-&\nabla_b L(w, b, \xi, \alpha, \mu)&=-\sum_{n=1}^{N}\alpha_ny_n=0\\
-&\nabla_{\xi_n} L(w, b, \xi, \alpha, \mu)&=C-\alpha_n-\mu_n=0
+&\nabla_w J(w, b, \xi, \alpha, \mu)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
+&\nabla_b J(w, b, \xi, \alpha, \mu)&=-\sum_{n=1}^{N}\alpha_ny_n=0\\
+&\nabla_{\xi_n} J(w, b, \xi, \alpha, \mu)&=C-\alpha_n-\mu_n=0
 \end{aligned}
 $$
 
