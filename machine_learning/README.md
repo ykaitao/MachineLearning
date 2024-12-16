@@ -724,7 +724,7 @@ E_{\mathbf{x}\sim X,D\sim \mathbb{D}}&\left[\left[h_{D}(\mathbf{x}) - (f(\mathbf
 \end{aligned}
 $$
 
-The middle term of the above equation is $0$ as we show below
+The covariance term (third term) of the above equation is $0$ as we show below, which leads to the bias-variance decomposition
 
 $$
 \begin{aligned}
