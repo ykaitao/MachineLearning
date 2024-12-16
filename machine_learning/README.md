@@ -284,7 +284,7 @@ L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(x_n))},\; y\in\{-1,1\}\\
 &=\sum_{n=1}^{N}e^{-y_n[f_{m-1}(x_n)+\beta_mb_m(x_n)]}\\
 &=\sum_{n=1}^{N}w_{m-1,n}e^{-y_n\beta_mb_m(x_n)},\; \text{where } w_{m-1,n}=e^{-y_nf_{m-1}(x_n)}\\
 &=\sum_{y_n=b_m(x_n)}w_{m-1,n}e^{-\beta_m}+\sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}\\
-&=\sum_{y_n=b_m(x_n),y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}+
+&=\sum_{y_n=b_m(x_n) \cup y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}+
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}-
 \sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}\\
 &=e^{-\beta_m}\sum_{n=1}^{N}w_{m-1,n}+(e^{\beta_m}-e^{-\beta_m})
