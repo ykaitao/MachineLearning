@@ -1,7 +1,3 @@
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
 <h1>Theory of popular Machine Learning algorithms</h1>
 
 Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-APPLIED](https://dlapplied.com/deep-learning-training/), VP of Machine Learning at [Epicore Biosystems, Inc.](https://www.epicorebiosystems.com/)
@@ -402,7 +398,12 @@ L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(x_n)+b_m(x_n))+\Omega(b_m),\\
 \end{aligned}
 $$
 
-Make use of Taylar's theorem: $$f(x) \approx f(a)+f'(a)(x-a)+{\frac {f''(a)}{2}}(x-a)^{2}$$
+Make use of Taylor's theorem: 
+$$
+\begin{aligned}
+\qquad f(x) &\approx f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2
+\end{aligned}
+$$
 
 $$
 \begin{aligned}
