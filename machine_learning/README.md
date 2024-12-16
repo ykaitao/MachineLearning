@@ -577,7 +577,7 @@ $$
 $$
 \begin{aligned}
 P(x|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(x|\mu_k, \sigma_k)\\
-&s.t.\;\sum_{k=1}^{K}a_k=1\\
+&s.t.\;\sum_{k=1}^{K}\alpha_k=1\\
 \text{where}\\
 &K\text{ is the number of Gaussian mixtures.}\\
 &\phi(y|\mu_k, \sigma_k)\text{ is kth Gaussian mixture.}\\
@@ -616,7 +616,6 @@ log P(X, Z|\theta^{(t+1)})&=log P(x_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
 &=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]^{Z_{nk}}\\
 &=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
 &=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}log \alpha_k^{(t+1)}+\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]
 \end{aligned}
 $$
 
@@ -627,8 +626,8 @@ $$
 Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|x_n,\theta^{(t)})}log P(X, Z|\theta^{(t+1)})\\
 &=P(Z_{nk}=0|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})+\\
 &\;\;\;\;P(Z_{nk}=1|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
-&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
+&=P(Z_{nk}=1|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
 &s.t.\;\sum_{k=1}^{K}a_k^{(t+1)}=1
 \end{aligned}
 $$
@@ -637,9 +636,8 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})log \alpha_k^{(t+1)}+\\
-&\;\;\;\;\sum_{k=1}^{K}\sum_{n=1}^{N}log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]+\\
-&\;\;\;\;\lambda(\sum_{k=1}^{K}a_k^{(t+1)}-1)
+Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
+&\;\;\;\;+\lambda(\sum_{k=1}^{K}a_k^{(t+1)}-1)
 \end{aligned}
 $$
 
@@ -671,25 +669,45 @@ $$
 \end{aligned}
 $$
 
-Similarly:
+Solution for $\mu_k^{(t+1)}$ and $(\sigma_k^{(t+1)})^2$:
+1. **Expand Gaussian term**:
+   $$
+   \begin{aligned}
+   \phi(x_n|\theta_k)=\phi(x_n|\mu_k, \sigma_k) = \frac{1}{\sqrt{2\pi}\sigma_k}exp(-\frac{(x_n-\mu_k)^2}{2\sigma_k^2})
+   \end{aligned}
+   $$
 
-$$
-\begin{aligned}
-\mu_k^{(t+1)}=\frac
-    {
-    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})x_n
-    }
-    {
-    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
-    }
-\end{aligned}
-$$
+2. **Take derivative of Q with respect to $\mu_k^{(t+1)}$**:
+   $$
+   \begin{aligned}
+   &\frac{\partial}{\partial \mu_k^{(t+1)}} Q_{\lambda} = \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{\partial}{\partial \mu_k^{(t+1)}}[-\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
+   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{(x_n-\mu_k^{(t+1)})}{(\sigma_k^{(t+1)})^2} = 0
+   \end{aligned}
+   $$
 
+3. **Solve for $\mu_k^{(t+1)}$**:
+   $$
+   \begin{aligned}
+   \mu_k^{(t+1)} &= \frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})x_n}{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})}
+   \end{aligned}
+   $$
+
+4. **Take derivative of Q with respect to $(\sigma_k^{(t+1)})^2$**:
+   $$
+   \begin{aligned}
+   &\frac{\partial}{\partial (\sigma_k^{(t+1)})^2} Q_{\lambda} \\
+   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{\partial}{\partial (\sigma_k^{(t+1)})^2}[-\frac{1}{2}log(2\pi(\sigma_k^{(t+1)})^2)-\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
+   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})[-\frac{1}{2(\sigma_k^{(t+1)})^2}+\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4}] = 0\\
+   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{-(\sigma_k^{(t+1)})^2 + (x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4} = 0
+   \end{aligned}
+   $$
+
+5. **Solve for $(\sigma_k^{(t+1)})^2$**:
 $$
 \begin{aligned}
 (\sigma_k^{(t+1)})^2=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(x_n-\mu_k^{(t)})^2
+    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(x_n-\mu_k^{(t+1)})^2
     }
     {
     \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
