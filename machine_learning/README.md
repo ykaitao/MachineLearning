@@ -15,6 +15,10 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
   - [Linear SVM (soft margin)](#linear-svm-soft-margin)
   - [Non-linear SVM (kernel tricks)](#non-linear-svm-kernel-tricks)
 - [Decision trees](#decision-trees)
+  - [ID3 (Iterative Dichotomiser 3)](#id3-iterative-dichotomiser-3)
+  - [C4.5 (Successor of ID3)](#c45-successor-of-id3)
+  - [CART (Classification And Regression Trees)](#cart-classification-and-regression-trees)
+  - [Comparison](#comparison)
 - [Boosting](#boosting)
   - [Adaboost for binary classification](#adaboost-for-binary-classification)
   - [Gradient boosting for regression (simple algorithm)](#gradient-boosting-for-regression-simple-algorithm)
@@ -264,6 +268,55 @@ $$
 &Gini_{index}(D,a)=\sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)
 \end{aligned}
 $$
+
+## ID3 (Iterative Dichotomiser 3)
+- **Selection Criterion**: Information Gain
+- **Features**: Handles only categorical features
+- **Algorithm Steps**:
+  1. Calculate entropy of dataset
+  2. Split on attribute with highest information gain
+  3. Repeat recursively until:
+     - All samples belong to same class
+     - No attributes remain
+     - No samples remain
+
+## C4.5 (Successor of ID3)
+- **Selection Criterion**: Gain Ratio
+- **Improvements over ID3**:
+  1. Handles continuous attributes (using threshold)
+  2. Handles missing values
+  3. Supports attribute costs
+  4. Post-pruning using error rates
+- **Algorithm Steps**:
+  1. Calculate gain ratio for each attribute
+  2. Choose best split using gain ratio
+  3. Create decision rules
+  4. Prune tree using pessimistic error rates
+
+## CART (Classification And Regression Trees)
+- **Selection Criterion**: 
+  - Classification: Gini index
+  - Regression: MSE reduction
+- **Key Features**:
+  1. Binary splits only
+  2. Handles both classification and regression
+  3. Built-in handling of missing values
+  4. Cost-complexity pruning
+- **Algorithm Steps**:
+  1. Find best binary split
+  2. Grow maximum tree
+  3. Prune using cost-complexity metric
+  4. Select best sub-tree using cross-validation
+
+## Comparison
+| Feature | ID3 | C4.5 | CART |
+|---------|-----|------|------|
+| Split Criterion | Information Gain | Gain Ratio | Gini/MSE |
+| Feature Types | Categorical | Both | Both |
+| Split Type | Multi-way | Multi-way | Binary |
+| Missing Values | No | Yes | Yes |
+| Pruning | No | Yes | Yes |
+| Output | Classification | Classification | Both |
 
 # Boosting
 
