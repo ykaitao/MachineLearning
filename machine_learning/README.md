@@ -17,8 +17,8 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
 - [Decision trees](#decision-trees)
 - [Boosting](#boosting)
   - [Adaboost for binary classification](#adaboost-for-binary-classification)
-  - [Adaboost for regression](#adaboost-for-regression)
-  - [Gradient boosting](#gradient-boosting)
+  - [Gradient boosting for regression (simple algorithm)](#gradient-boosting-for-regression-simple-algorithm)
+  - [XGBoost for regression](#xgboost-for-regression)
 - [Naive Bayes for classification](#naive-bayes-for-classification)
   - [Train](#train)
     - [`P(Y)`](#py)
@@ -343,7 +343,7 @@ $$
 \end{aligned}
 $$
 
-## Adaboost for regression
+## Gradient boosting for regression (simple algorithm)
 
 $$
 \begin{aligned}
@@ -366,14 +366,15 @@ Solution:
 
 $$
 \begin{aligned}
-&f_{0}(x_n)=0,\;n=1,2,\dots,N\\
-\text{For m=1, 2, ..., M:}\\
-&r_{m,n}=y_n-f_{m-1}(x_n)\\
-&\text{fit a regression tree } b_m \text{ to } r_{m,n}.
+&\text{For m=1:}\\
+&\quad f_1(x)=\bar{y} \quad \text{(initialize with mean target value)}\\
+&\text{For m=2, 3, ..., M:}\\
+&\quad r_{m,n}=y_n-f_{m-1}(x_n)\\
+&\quad \text{fit a regression tree } b_m \text{ to } r_{m,n}
 \end{aligned}
 $$
 
-## Gradient boosting
+## XGBoost for regression
 
 Reference
 
