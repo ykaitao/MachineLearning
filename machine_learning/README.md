@@ -38,16 +38,16 @@ Author: [Kaitao Yang](https://www.linkedin.com/in/kaitaoyang/), founder of [DL-A
 
 $$
 \begin{aligned}
-&(x,y)\quad &\text{ a data point with input feature: x, and label: y.}\\
+&(\mathbf{x},y)\quad &\text{ a data point with input feature: } \mathbf{x}, \text{ and label: } y.\\
 &D\quad &\text{ a set of data points.}\\
 &\mathbb{D}\quad &\text{ a collection of datasets.}\\
 &N\quad &\text{ number of data points.}\\
 &C\quad &\text{ number of classes.}\\
-&R^{m\text{x}n}\quad &\text{ an m-by-n matrix of real numbers.}\\
-&X\quad &\text{ a feature matrix (design matrix) of dimension: }R^{N\text{x}M}\\
+&\mathbf{R}^{m \times n}\quad &\text{ an } m \text{-by-} n \text{ matrix of real numbers.}\\
+&\mathbf{X}\quad &\text{ a feature matrix (design matrix) of dimension: } \mathbf{R}^{N \times M}\\
 &\mathbf{1}_{\{condition\}}\quad &\text{ indicator function: 1 if condition is true, 0 otherwise.}\\
 &{\mathcal {N}}(x;\mu,\sigma ^{2})\quad & \text{Gaussian distribution with mean and variance: } \mu,\;\sigma^2\\
-&w \cdot x\quad & \text{inner product between two vectors: w and x.}\\
+&\mathbf{w} \cdot \mathbf{x}\quad & \text{inner product between two vectors: } \mathbf{w} \text{ and } \mathbf{x}.\\
 \end{aligned}
 $$
 
@@ -57,9 +57,9 @@ $$
 
 $$
 \begin{aligned}
-&y = f(x;{\theta}) = f(x;w,b) = w \cdot x + b \\
+&y = f(\mathbf{x};{\theta}) = f(\mathbf{x};\mathbf{w},b) = \mathbf{w} \cdot \mathbf{x} + b \\
 \text{where} \\
-&\theta \text{ represents the model parameters, which include } w \text{ (weights) and } b \text{ (bias).}
+&\theta \text{ represents the model parameters, which include } \mathbf{w} \text{ (weights) and } b \text{ (bias).}
 \end{aligned}
 $$
 
@@ -67,10 +67,10 @@ $$
 
 $$
 \begin{aligned}
-P(Y=c|X=x) &=
+P(Y=c|\mathbf{X}=\mathbf{x}) &=
 \begin{cases}
-    \frac{e^{f(x;\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
-    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=C
+    \frac{e^{f(\mathbf{x};\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(\mathbf{x};\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
+    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(\mathbf{x};\theta_{c'})}}, & \text{if } c=C
 \end{cases} \\
 \text{where} \\
 &C \text{ is the number of classes.}
@@ -81,7 +81,7 @@ $$
 
 $$
 \begin{aligned}
-P(Y=c|X=x)=\frac{e^{f(x;\theta_c)}}{\sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\;c=1,2,\dots,C
+P(Y=c|\mathbf{X}=\mathbf{x})=\frac{e^{f(\mathbf{x};\theta_c)}}{\sum_{c'=1}^{C}e^{f(\mathbf{x};\theta_{c'})}},\;c=1,2,\dots,C
 \end{aligned}
 $$
 
@@ -90,15 +90,15 @@ Starts from softmax regression:
 
 $$
 \begin{aligned}
-P(Y=c|X=x)&=\frac{e^{f(x;\theta_c)}}{\sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\\
-&=\frac{e^{-f(x;\theta_C)} e^{f(x;\theta_c)}}{e^{-f(x;\theta_C)} \sum_{c'=1}^{C}e^{f(x;\theta_{c'})}},\\
-&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{\sum_{c'=1}^{C}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
-&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{e^{[f(x;\theta_{C})-f(x;\theta_C)]} + \sum_{c'=1}^{C-1}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
-&=\frac{e^{[f(x;\theta_c)-f(x;\theta_C)]}}{e^{0} + \sum_{c'=1}^{C-1}e^{[f(x;\theta_{c'})-f(x;\theta_C)]}},\\
-& f(x;\theta_{c}) \leftarrow f(x;\theta_{c})-f(x;\theta_C)\\
+P(Y=c|\mathbf{X}=\mathbf{x})&=\frac{e^{f(\mathbf{x};\theta_c)}}{\sum_{c'=1}^{C}e^{f(\mathbf{x};\theta_{c'})}},\\
+&=\frac{e^{-f(\mathbf{x};\theta_C)} e^{f(\mathbf{x};\theta_c)}}{e^{-f(\mathbf{x};\theta_C)} \sum_{c'=1}^{C}e^{f(\mathbf{x};\theta_{c'})}},\\
+&=\frac{e^{[f(\mathbf{x};\theta_c)-f(\mathbf{x};\theta_C)]}}{\sum_{c'=1}^{C}e^{[f(\mathbf{x};\theta_{c'})-f(\mathbf{x};\theta_C)]}},\\
+&=\frac{e^{[f(\mathbf{x};\theta_c)-f(\mathbf{x};\theta_C)]}}{e^{[f(\mathbf{x};\theta_{C})-f(\mathbf{x};\theta_C)]} + \sum_{c'=1}^{C-1}e^{[f(\mathbf{x};\theta_{c'})-f(\mathbf{x};\theta_C)]}},\\
+&=\frac{e^{[f(\mathbf{x};\theta_c)-f(\mathbf{x};\theta_C)]}}{e^{0} + \sum_{c'=1}^{C-1}e^{[f(\mathbf{x};\theta_{c'})-f(\mathbf{x};\theta_C)]}},\\
+& f(\mathbf{x};\theta_{c}) \leftarrow f(\mathbf{x};\theta_{c})-f(\mathbf{x};\theta_C)\\
 &=\begin{cases}
-    \frac{e^{f(x;\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
-    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(x;\theta_{c'})}}, & \text{if } c=C
+    \frac{e^{f(\mathbf{x};\theta_c)}}{1+\sum_{c'=1}^{C-1}e^{f(\mathbf{x};\theta_{c'})}}, & \text{if } c=1,2,\dots,C-1 \\
+    \frac{1}{1+\sum_{c'=1}^{C-1}e^{f(\mathbf{x};\theta_{c'})}}, & \text{if } c=C
 \end{cases} \\
 \end{aligned}
 $$
@@ -107,12 +107,12 @@ $$
 
 ## Linear SVM in linearly separable case (hard margin)
 
-The distance $d_n$ from each data point $(x_n, y_n), n=1,2,\dots,N$ to the hyperplane $w\cdot x+b=0$ is as follows (we need to maximize these distances):
+The distance $d_n$ from each data point $(\mathbf{x}_n, y_n), n=1,2,\dots,N$ to the hyperplane $\mathbf{w\cdot x}+b=0$ is as follows (we need to maximize these distances):
 
 $$
 \begin{aligned}
-d_n&=\frac{|w\cdot x_n+b|}{||w||}, n=1,2,\dots,N\\
-&=\frac{y_n(w\cdot x_n+b)}{||w||}, y_n\in\{-1, 1\}.
+d_n&=\frac{|\mathbf{w} \cdot \mathbf{x}_n + b|}{||\mathbf{w}||}, \quad n=1,2,\dots,N\\
+&=\frac{y_n(\mathbf{w} \cdot \mathbf{x}_n + b)}{||\mathbf{w}||}, \quad y_n \in \{-1, 1\}.
 \end{aligned}
 $$
 
@@ -120,8 +120,8 @@ Which is equivalent to:
 
 $$
 \begin{aligned}
-&\min_{w, b}\; \frac{1}{2}||w||^2\\
-& s.t.\; y_n(w\cdot x_n+b)\geq1.
+&\min_{\mathbf{w}, b}\; \frac{1}{2}||\mathbf{w}||^2\\
+& \text{s.t.}\; y_n(\mathbf{w} \cdot \mathbf{x}_n + b) \geq 1.
 \end{aligned}
 $$
 
@@ -129,8 +129,8 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-&\max_\alpha\; \min_{w, b}\; J(w, b, \alpha)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(w\cdot x_n+b)],\\
-&s.t.\; \alpha_n\geq0, \;n=1,2,\dots,N.
+&\max_\alpha\; \min_{\mathbf{w}, b}\; J(\mathbf{w}, b, \mathbf{\alpha})=\frac{1}{2}||\mathbf{w}||^2+\sum_{n=1}^{N}\alpha_n[1-y_n(\mathbf{w} \cdot \mathbf{x}_n+b)],\\
+&\text{s.t.}\; \alpha_n\geq0, \;n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -138,8 +138,8 @@ Solve $\min\limits_{w,b}$
 
 $$
 \begin{aligned}
-&\nabla_w J(w, b, \alpha)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
-&\nabla_b J(w, b, \alpha)&=-\sum_{n=1}^{N}\alpha_ny_n=0
+&\nabla_{\mathbf{w}} J(\mathbf{w}, b, \alpha)&=\mathbf{w}-\sum_{n=1}^{N}\alpha_n y_n \mathbf{x}_n=0\\
+&\nabla_b J(\mathbf{w}, b, \alpha)&=-\sum_{n=1}^{N}\alpha_n y_n=0
 \end{aligned}
 $$
 
@@ -147,8 +147,8 @@ Solve $\max\limits_{\alpha}$
 
 $$
 \begin{aligned}
-&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}(x_n\cdot x_{n'})+\sum_{n=1}^{N}\alpha_n\\
-&s.t.\; \sum_{n=1}^{N}\alpha_ny_n=0, \alpha_n\geq0,\; n=1,2,\dots,N.
+&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}(\mathbf{x}_n\cdot \mathbf{x}_{n'})+\sum_{n=1}^{N}\alpha_n\\
+&\text{s.t.}\; \sum_{n=1}^{N}\alpha_ny_n=0, \alpha_n\geq0,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -156,8 +156,8 @@ $$
 
 $$
 \begin{aligned}
-&\min_{w, b}\; \frac{1}{2}||w||^2+C\sum_{n=1}^{N}\xi_n\\
-& s.t.\; y_n(w\cdot x_n+b)\geq1-\xi_n,\; \xi_n\geq0,\; n=1,2,\dots,N.
+&\min_{\mathbf{w}, b}\; \frac{1}{2}||\mathbf{w}||^2+C\sum_{n=1}^{N}\xi_n\\
+& \text{s.t.}\; y_n(\mathbf{w} \cdot \mathbf{x}_n + b)\geq1-\xi_n,\; \xi_n\geq0,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -165,8 +165,8 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-&\max_{\alpha,\mu}\; \min_{w, b, \xi}\; J(w, b, \xi, \alpha, \mu)=\frac{1}{2}||w||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(w\cdot x_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\
-&s.t.\; \alpha_n\geq0,\; \mu_n\geq0,\; n=1,2,\dots,N.
+&\max_{\alpha,\mu}\; \min_{\mathbf{w}, b, \xi}\; J(\mathbf{w}, b, \xi, \alpha, \mu)=\frac{1}{2}||\mathbf{w}||^2+\sum_{n=1}^{N}\alpha_n[1-\xi_n-y_n(\mathbf{w}\cdot \mathbf{x}_n+b)]+\sum_{n=1}^{N}\mu_n(-\xi_n),\\
+&\text{s.t.}\; \alpha_n\geq0,\; \mu_n\geq0,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -174,9 +174,9 @@ Solve $\min_{w,b,\xi}$
 
 $$
 \begin{aligned}
-&\nabla_w J(w, b, \xi, \alpha, \mu)&=w-\sum_{n=1}^{N}\alpha_ny_nx_n=0\\
-&\nabla_b J(w, b, \xi, \alpha, \mu)&=-\sum_{n=1}^{N}\alpha_ny_n=0\\
-&\nabla_{\xi_n} J(w, b, \xi, \alpha, \mu)&=C-\alpha_n-\mu_n=0
+&\nabla_{\mathbf{w}} J(\mathbf{w}, b, \xi, \alpha, \mu)&=\mathbf{w}-\sum_{n=1}^{N}\alpha_n y_n \mathbf{x}_n=0\\
+&\nabla_b J(\mathbf{w}, b, \xi, \alpha, \mu)&=-\sum_{n=1}^{N}\alpha_n y_n=0\\
+&\nabla_{\xi_n} J(\mathbf{w}, b, \xi, \alpha, \mu)&=C-\alpha_n-\mu_n=0
 \end{aligned}
 $$
 
@@ -184,8 +184,8 @@ Solve $\max_{\alpha}$
 
 $$
 \begin{aligned}
-&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}(x_n\cdot x_{n'})+\sum_{n=1}^{N}\alpha_n\\
-&s.t.\; \sum_{n=1}^{N}\alpha_ny_n=0,\; 0\leq \alpha_n\leq C,\; n=1,2,\dots,N.
+&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}(\mathbf{x}_n\cdot \mathbf{x}_{n'})+\sum_{n=1}^{N}\alpha_n\\
+&\text{s.t.}\; \sum_{n=1}^{N}\alpha_ny_n=0,\; 0\leq \alpha_n\leq C,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -193,9 +193,9 @@ Another explanation (hinge loss with L2 regularization):
 
 $$
 \begin{aligned}
-&\xi_n\geq{1-y_n(w\cdot x_n+b)}\\
+&\xi_n\geq{1-y_n(\mathbf{w}\cdot \mathbf{x}_n+b)}\\
 &\lambda=\frac{1}{2C}\\
-&L_{hinge+regL2}(w, b, \lambda)=\sum_{n=1}^{N}[1-y_n(w\cdot x_n+b)]_{+}+\lambda||w||^2.
+&L_{hinge+regL2}(\mathbf{w}, b, \lambda)=\sum_{n=1}^{N}[1-y_n(\mathbf{w}\cdot \mathbf{x}_n+b)]_{+}+\lambda||\mathbf{w}||^2.
 \end{aligned}
 $$
 
@@ -205,8 +205,8 @@ Replace the inner product $(x_n \cdot x_{n'})$ by a Kernel function $K(x_n,x_{n'
 
 $$
 \begin{aligned}
-&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}K(x_n,x_{n'})+\sum_{n=1}^{N}\alpha_n\\
-&s.t.\; \sum_{n=1}^{N}\alpha_ny_n=0,\; 0\leq \alpha_n\leq C,\; n=1,2,\dots,N.
+&\max_\alpha\; -\frac{1}{2}\sum_{n=1}^{N}\sum_{n'=1}^{N}\alpha_n\alpha_{n'}y_ny_{n'}K(\mathbf{x_n},\mathbf{x_{n'}})+\sum_{n=1}^{N}\alpha_n\\
+&\text{s.t.}\; \sum_{n=1}^{N}\alpha_ny_n=0,\; 0\leq \alpha_n\leq C,\; n=1,2,\dots,N.
 \end{aligned}
 $$
 
@@ -214,8 +214,8 @@ Kernel examples:
 
 $$
 \begin{aligned}
-&K(x_n, x_{n'}) = (x_n \cdot x_{n'} + 1)^p\; (Polynomial)\\
-&K(x_n, x_{n'}) = exp(-\frac{||x_n-x_{n'}||^2}{2\sigma^2})\; (Gaussian)
+&K(\mathbf{x_n}, \mathbf{x_{n'}}) = (\mathbf{x_n} \cdot \mathbf{x_{n'}} + 1)^p\; \text{(Polynomial)}\\
+&K(\mathbf{x_n}, \mathbf{x_{n'}}) = \exp\left(-\frac{||\mathbf{x_n}-\mathbf{x_{n'}}||^2}{2\sigma^2}\right)\; \text{(Gaussian)}
 \end{aligned}
 $$
 
@@ -309,6 +309,7 @@ $$
   4. Select best sub-tree using cross-validation
 
 ## Comparison
+
 | Feature | ID3 | C4.5 | CART |
 |---------|-----|------|------|
 | Split Criterion | Information Gain | Gain Ratio | Gini/MSE |
@@ -324,8 +325,8 @@ $$
 
 $$
 \begin{aligned}
-f_M(x)=\sum_{m=1}^{M}\beta_mb_m(x) \\
-\text{where}\; b_m(x)\in\{-1,1\}
+f_M(\mathbf{x})=\sum_{m=1}^{M}\beta_mb_m(\mathbf{x}) \\
+\text{where}\; b_m(\mathbf{x})\in\{-1,1\}
 \end{aligned}
 $$
 
@@ -333,18 +334,18 @@ Exponential loss:
 
 $$
 \begin{aligned}
-L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(x_n))},\; y\in\{-1,1\}\\
-&=\sum_{n=1}^{N}e^{-y_n[f_{m-1}(x_n)+\beta_mb_m(x_n)]}\\
-&=\sum_{n=1}^{N}w_{m-1,n}e^{-y_n\beta_mb_m(x_n)},\; \text{where } w_{m-1,n}=e^{-y_nf_{m-1}(x_n)}\\
-&=\sum_{y_n=b_m(x_n)}w_{m-1,n}e^{-\beta_m}+\sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}\\
-&=\sum_{y_n=b_m(x_n) \cup y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}+
-\sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{\beta_m}-
-\sum_{y_n\neq b_m(x_n)}w_{m-1,n}e^{-\beta_m}\\
+L(\beta_m, b_m) &= \sum_{n=1}^{N}e^{(-y_nf_m(\mathbf{x}_n))},\; y\in\{-1,1\}\\
+&=\sum_{n=1}^{N}e^{-y_n[f_{m-1}(\mathbf{x}_n)+\beta_mb_m(\mathbf{x}_n)]}\\
+&=\sum_{n=1}^{N}w_{m-1,n}e^{-y_n\beta_mb_m(\mathbf{x}_n)},\; \text{where } w_{m-1,n}=e^{-y_nf_{m-1}(\mathbf{x}_n)}\\
+&=\sum_{y_n=b_m(\mathbf{x}_n)}w_{m-1,n}e^{-\beta_m}+\sum_{y_n\neq b_m(\mathbf{x}_n)}w_{m-1,n}e^{\beta_m}\\
+&=\sum_{y_n=b_m(\mathbf{x}_n) \cup y_n\neq b_m(\mathbf{x}_n)}w_{m-1,n}e^{-\beta_m}+
+\sum_{y_n\neq b_m(\mathbf{x}_n)}w_{m-1,n}e^{\beta_m}-
+\sum_{y_n\neq b_m(\mathbf{x}_n)}w_{m-1,n}e^{-\beta_m}\\
 &=e^{-\beta_m}\sum_{n=1}^{N}w_{m-1,n}+(e^{\beta_m}-e^{-\beta_m})
-\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}\\
+\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(\mathbf{x}_n)\}}\\
 &\propto e^{-\beta_m}+(e^{\beta_m}-e^{-\beta_m})\epsilon_m,\;\\ 
 \text{where }\\
-& \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}
+& \epsilon_m = \frac{\sum_{n=1}^{N}w_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(\mathbf{x}_n)\}}}{\sum_{n=1}^{N}w_{m-1,n}}=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(\mathbf{x}_n)\}}
 \end{aligned}
 $$
 
@@ -354,15 +355,15 @@ $$
 \begin{aligned}
 &\bar{w}_{0,n}=1/N,\; n=1,2,\dots,N\\
 \text{For m=1, 2, ..., M:}\\
-&\epsilon_m(b_m)=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(x_n)\}}\\
-&b_m^* = arg \min_{b_m}\epsilon_m(b_m)\\
+&\epsilon_m(b_m)=\sum_{n=1}^{N}\bar{w}_{m-1,n}\mathbf{1}_{\{y_n \neq b_m(\mathbf{x}_n)\}}\\
+&b_m^* = \arg \min_{b_m}\epsilon_m(b_m)\\
 &\epsilon_m^*=\epsilon_m(b_m^*)\\
 &\nabla_{\beta_m}L(\beta_m, b_m^*)\propto-1+(e^{2\beta_m}+1)\epsilon_m^*=0\\
-&\beta_m^* = \frac{1}{2}log\frac{1-\epsilon_m^*}{\epsilon_m^*}\\
+&\beta_m^* = \frac{1}{2}\log\frac{1-\epsilon_m^*}{\epsilon_m^*}\\
 &\bar{w}_{m,n} =
 \begin{cases}
-    \frac{\bar{w}_{m-1,n}}{2(1-\epsilon_m^*)}, & \text{if } y_n=b_m^*(x_n)\\
-    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(x_n)\\
+    \frac{\bar{w}_{m-1,n}}{2(1-\epsilon_m^*)}, & \text{if } y_n=b_m^*(\mathbf{x}_n)\\
+    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(\mathbf{x}_n)\\
 \end{cases}
 \end{aligned}
 $$
@@ -372,26 +373,26 @@ Proof:
 $$
 \begin{aligned}
 &\bar{w}_{m,n}=\frac{w_{m,n}}{\sum_{n=1}^{N}w_{m,n}},\\
-&=\frac{e^{-y_nf_{m}(x_n)}}{Z_{m}},\; \text{where } Z_{m}=\sum_{n=1}^{N}w_{m,n}\\
-&=\frac{w_{m-1,n}e^{-y_n\beta_m^* b_m^*(x_n)}}{Z_{m}}\\
-&=\frac{w_{m-1,n}e^{\beta_m^*(2*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}})-1)}}{Z_{m}}\\
-&=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}e^{-\beta_m^*}}{Z_{m}}\\
-&=\frac{\bar{w}_{m-1,n}e^{\beta_m^*2\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}C}{Z_{m}},\; \text{where } C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
-&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}_{\{y_{n'} \neq b_m^*(x_{n'})\}}}},\\
-&=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
-\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}
+&=\frac{e^{-y_nf_{m}(\mathbf{x}_n)}}{Z_{m}},\; \text{where } Z_{m}=\sum_{n=1}^{N}w_{m,n}\\
+&=\frac{w_{m-1,n}e^{-y_n\beta_m^* b_m^*(\mathbf{x}_n)}}{Z_{m}}\\
+&=\frac{w_{m-1,n}e^{\beta_m^*(2*\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}})-1)}}{Z_{m}}\\
+&=\frac{\bar{w}_{m-1,n}\sum_{j=1}^{N}w_{m-1,j}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}}}e^{-\beta_m^*}}{Z_{m}}\\
+&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}}}C}{Z_{m}},\; \text{where } C=e^{-\beta_m^*}\sum_{j=1}^{N}w_{m-1,j}\\
+&=\frac{\bar{w}_{m-1,n}e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}}}}{\sum_{n'=1}^{N}\bar{w}_{m-1,n'}e^{2\beta_m^*\mathbf{1}_{\{y_{n'} \neq b_m^*(\mathbf{x}_{n'})\}}}},\\
+&=\frac{\bar{w}_{m-1,n} e^{2\beta_m^*\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}}}}{\sum_{y_n \neq b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}e^{2\beta_m^*}+
+\sum_{y_n = b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}
 }, \\
 &\text{making use of }\\
     &\qquad e^{2\beta_m^*} =e^{2\frac{1}{2}log\frac{1-\epsilon_m^*}{\epsilon_m^*}}=\frac{1-\epsilon_m^*}{\epsilon_m^*}\\
-    &\qquad {\epsilon_m^*}={\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}\\
-    &\qquad 1 = {\sum_{n}\bar{w}_{m-1,n}} = {\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} \\
-    &\qquad {\sum_{y_n = b_m^*(x_n)}\bar{w}_{m-1,n}} = 1-{\sum_{y_n \neq b_m^*(x_n)}\bar{w}_{m-1,n}}=1-{\epsilon_m^*}\\
-&=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}_{\{y_n \neq b_m^*(x_n)\}}}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
+    &\qquad {\epsilon_m^*}={\sum_{y_n \neq b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}}\\
+    &\qquad 1 = {\sum_{n}\bar{w}_{m-1,n}} = {\sum_{y_n \neq b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}} + {\sum_{y_n = b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}} \\
+    &\qquad {\sum_{y_n = b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}} = 1-{\sum_{y_n \neq b_m^*(\mathbf{x}_n)}\bar{w}_{m-1,n}}=1-{\epsilon_m^*}\\
+&=\frac{\bar{w}_{m-1,n}(\frac{1-\epsilon_m^*}{\epsilon_m^*})^{\mathbf{1}_{\{y_n \neq b_m^*(\mathbf{x}_n)\}}}}{\epsilon_m^*\frac{1-\epsilon_m^*}{\epsilon_m^*}+(1-\epsilon_m^*)
 },\\
 &=
 \begin{cases}
-    \frac{\bar{w}_{m-1,n}}{2(1-\epsilon_m^*)}, & \text{if } y_n=b_m^*(x_n)\\
-    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(x_n)
+    \frac{\bar{w}_{m-1,n}}{2(1-\epsilon_m^*)}, & \text{if } y_n=b_m^*(\mathbf{x}_n)\\
+    \frac{\bar{w}_{m-1,n}}{2\epsilon_m^*}, & \text{if } y_n \neq b_m^*(\mathbf{x}_n)
 \end{cases}
 \end{aligned}
 $$
@@ -400,8 +401,8 @@ $$
 
 $$
 \begin{aligned}
-f_M(x)=\sum_{m=1}^{M}b_m(x) \\
-\text{where } b_m(x)\text{ is a regressor.}
+f_M(\mathbf{x})=\sum_{m=1}^{M}b_m(\mathbf{x}) \\
+\text{where } b_m(\mathbf{x})\text{ is a regressor.}
 \end{aligned}
 $$
 
@@ -409,9 +410,9 @@ Square loss:
 
 $$
 \begin{aligned}
-L(b_m) &= \sum_{n=1}^{N}[y_n-f_m(x_n)]^2\\
-&=\sum_{n=1}^{N}[y_n-f_{m-1}(x_n)-b_m(x_n)]^2\\
-&=\sum_{n=1}^{N}[r_{m,n}-b_m(x_n)]^2,\; \text{where } r_{m,n}=y_n-f_{m-1}(x_n)
+L(b_m) &= \sum_{n=1}^{N}[y_n-f_m(\mathbf{x}_n)]^2\\
+&=\sum_{n=1}^{N}[y_n-f_{m-1}(\mathbf{x}_n)-b_m(\mathbf{x}_n)]^2\\
+&=\sum_{n=1}^{N}[r_{m,n}-b_m(\mathbf{x}_n)]^2,\; \text{where } r_{m,n}=y_n-f_{m-1}(\mathbf{x}_n)
 \end{aligned}
 $$
 
@@ -420,9 +421,9 @@ Solution:
 $$
 \begin{aligned}
 &\text{For m=1:}\\
-&\quad f_1(x)=\bar{y} \quad \text{(initialize with mean target value)}\\
+&\quad f_1(\mathbf{x})=\bar{y} \quad \text{(initialize with mean target value)}\\
 &\text{For m=2, 3, ..., M:}\\
-&\quad r_{m,n}=y_n-f_{m-1}(x_n)\\
+&\quad r_{m,n}=y_n-f_{m-1}(\mathbf{x}_n)\\
 &\quad \text{fit a regression tree } b_m \text{ to } r_{m,n}
 \end{aligned}
 $$
@@ -435,8 +436,8 @@ Reference
 
 $$
 \begin{aligned}
-f_M(x)=\sum_{m=1}^{M}b_m(x) \\
-\text{where } b_m(x)\text{ is a regression tree.}
+f_M(\mathbf{x})=\sum_{m=1}^{M}b_m(\mathbf{x}) \\
+\text{where } b_m(\mathbf{x})\text{ is a regression tree.}
 \end{aligned}
 $$
 
@@ -444,11 +445,11 @@ General loss:
 
 $$
 \begin{aligned}
-L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(x_n)+b_m(x_n))+\Omega(b_m),\\
+L(b_m) &= \sum_{n=1}^{N}l(y_n,f_{m-1}(\mathbf{x}_n)+b_m(\mathbf{x}_n))+\Omega(b_m),\\
 \text{where}\\
-&\Omega(b_m)=\gamma T_m+\frac{1}{2}\lambda||v_m||^2\\
+&\Omega(b_m)=\gamma T_m+\frac{1}{2}\lambda||\mathbf{v_m}||^2\\
 &T_m\text{ is the number of leaf nodes of tree }b_m,\\
-&v_m\text{ is the values of leaf nodes of tree }b_m.
+&\mathbf{v_m}\text{ are the values of leaf nodes of tree }b_m.
 \end{aligned}
 $$
 
@@ -461,10 +462,10 @@ $$
 
 $$
 \begin{aligned}
-L(b_m) &\approx \sum_{n=1}^{N}[l(y_n,f_{m-1}(x_n)+g_{m-1, n}b_m(x_n)+\frac{1}{2}h_{m-1, n}b_m^2(x_n)]+\Omega(b_m),\\
+L(b_m) &\approx \sum_{n=1}^{N}[l(y_n,f_{m-1}(\mathbf{x}_n)+g_{m-1, n}b_m(\mathbf{x}_n)+\frac{1}{2}h_{m-1, n}b_m^2(\mathbf{x}_n)]+\Omega(b_m),\\
 &\text{where } g_{m-1, n}=\nabla_{f_{m-1}}l(y_n, f_{m-1})，h_{m-1, n}=\nabla^2_{f_{m-1}}l(y_n, f_{m-1})\\
-&= \sum_{n=1}^{N}[g_{m-1, n}b_m(x_n)+\frac{1}{2}h_{m-1, n}b_m^2(x_n)]+\gamma T_m+\frac{1}{2}\lambda||v_m||^2+constant,\;\\
-&\text{where } constant=\sum_{n=1}^{N}l(y_n,f_{m-1}(x_n))\text{ is irrelevant to }b_m\text{, and can be dropped.}\\
+&= \sum_{n=1}^{N}[g_{m-1, n}b_m(\mathbf{x}_n)+\frac{1}{2}h_{m-1, n}b_m^2(\mathbf{x}_n)]+\gamma T_m+\frac{1}{2}\lambda||\mathbf{v_m}||^2+constant,\;\\
+&\text{where } constant=\sum_{n=1}^{N}l(y_n,f_{m-1}(\mathbf{x}_n))\text{ is irrelevant to }b_m\text{, and can be dropped.}\\
 &\approx \sum_{t=1}^{T_m}\left[v_{m,t}\sum_{n\in R_t}g_{m-1, n}+\frac{1}{2}v_{m,t}^2\sum_{n\in R_t}h_{m-1, n}\right]+\gamma T_m+\frac{1}{2}\lambda\sum_{t=1}^{T_m}v_{m,t}^2,\\
 &\text{where } R_t \text{ are those data points fall into the leaf node t}.\\
 &= \sum_{t=1}^{T_m}\left[v_{m,t}\sum_{n\in R_t}g_{m-1, n}+\frac{1}{2}v_{m,t}^2(\sum_{n\in R_t}h_{m-1, n}+\lambda)\right]+\gamma T_m.
@@ -506,7 +507,7 @@ $$
 P(Y=c)&=\frac{\sum_{n=1}^{N}\mathbf{1}_{\{y_n=c\}}}{N},\;c=1,2,\dots,C\\
 \text{where}\\
 &C\text{ is the number of classes.}\\
-&N\text{ is the number of data points for training.}\\
+&N\text{ is the number of data points for training.}
 \end{aligned}
 $$
 
@@ -536,12 +537,12 @@ $$
 
 $$
 \begin{aligned}
-P(X^{(j)}=x^{(j)}|Y=c) &= {\mathcal {N}}(x^{(j)}; \mu_{jc}, \sigma_{jc}^2), \\
+P(X^{(j)}=\mathbf{x}^{(j)}|Y=c) &= {\mathcal {N}}(\mathbf{x}^{(j)}; \mu_{jc}, \sigma_{jc}^2), \\
 &j=1,2,\dots,J_c, \\
 \text{where} \\
 &J_c \text{ is the number of continuous attributes}, \\
-&\mu_{jc} = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} x_n^{(j)}}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}, \\
-&\sigma_{jc}^2 = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} (x_n^{(j)} - \mu_{jc})^2}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}.
+&\mu_{jc} = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} \mathbf{x}_n^{(j)}}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}, \\
+&\sigma_{jc}^2 = \frac{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}} (\mathbf{x}_n^{(j)} - \mu_{jc})^2}{\sum_{n=1}^{N} \mathbf{1}_{\{y_n=c\}}}.
 \end{aligned}
 $$
 
@@ -549,7 +550,7 @@ $$
 
 $$
 \begin{aligned}
-y=arg \max_{c}P(Y=c)\prod_{j=1}^{J_d}\prod_{k=1}^{K_j}P(X^{(j)}&=\mathbb{X}^{(jk)}|Y=c)\prod_{j=1}^{J_c}P(X^{(j)}&=x^{(j)}|Y=c)
+y=arg \max_{c}P(Y=c)\prod_{j=1}^{J_d}\prod_{k=1}^{K_j}P(X^{(j)}=\mathbb{X}^{(jk)}|Y=c)\prod_{j=1}^{J_c}P(X^{(j)}=\mathbf{x}^{(j)}|Y=c)
 \end{aligned}
 $$
 
@@ -629,13 +630,13 @@ $$
 
 $$
 \begin{aligned}
-P(x|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(x|\mu_k, \sigma_k)\\
-&s.t.\;\sum_{k=1}^{K}\alpha_k=1\\
+P(\mathbf{x}|\theta)&=\sum_{k=1}^{K}\alpha_k\phi(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\sigma}_k)\\
+&\text{s.t.}\;\sum_{k=1}^{K}\alpha_k=1\\
 \text{where}\\
 &K\text{ is the number of Gaussian mixtures.}\\
-&\phi(y|\mu_k, \sigma_k)\text{ is kth Gaussian mixture.}\\
+&\phi(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\sigma}_k)\text{ is the kth Gaussian mixture.}\\
 &\alpha_k\text{ is the coefficient of the kth Gaussian mixture.}\\
-&\theta=[\alpha,\mu,\sigma]\text{ is the collection of all model parameters.}\\
+&\theta=[\alpha,\mathbf{\mu},\mathbf{\sigma}]\text{ is the collection of all model parameters.}\\
 \end{aligned}
 $$
 
@@ -655,8 +656,8 @@ Conditional distribution of $Z_{nk}$
 
 $$
 \begin{aligned}
-P(Z_{nk}=1|x_n,\theta^{(t)})&=P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\\
-&=\frac{\alpha_k^{(t)}\phi(x_n|\mu_k^{(t)}, \sigma_k^{(t)})}{\sum_{l=1}^{K}\alpha_l\phi(x_n|\mu_l^{(t)}, \sigma_l^{(t)})}
+P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})&=P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})\\
+&=\frac{\alpha_k^{(t)}\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t)}, \mathbf{\sigma}_k^{(t)})}{\sum_{l=1}^{K}\alpha_l\phi(\mathbf{x}_n|\mathbf{\mu}_l^{(t)}, \mathbf{\sigma}_l^{(t)})}
 \end{aligned}
 $$
 
@@ -664,11 +665,11 @@ Log likelihood
 
 $$
 \begin{aligned}
-log P(X, Z|\theta^{(t+1)})&=log P(x_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
-&=log \prod_{n=1}^{N}P(x_n,Z_n|\mu^{(t+1)},\sigma^{(t+1)})\\
-&=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]^{Z_{nk}}\\
-&=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
+log P(X, Z|\theta^{(t+1)})&=log P(\mathbf{x}_n,Z_n|\mathbf{\mu}^{(t+1)},\mathbf{\sigma}^{(t+1)})\\
+&=log \prod_{n=1}^{N}P(\mathbf{x}_n,Z_n|\mathbf{\mu}^{(t+1)},\mathbf{\sigma}^{(t+1)})\\
+&=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]^{Z_{nk}}\\
+&=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\}\\
 \end{aligned}
 $$
 
@@ -676,12 +677,12 @@ Q function
 
 $$
 \begin{aligned}
-Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|x_n,\theta^{(t)})}log P(X, Z|\theta^{(t+1)})\\
-&=P(Z_{nk}=0|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})+\\
-&\;\;\;\;P(Z_{nk}=1|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
-&=P(Z_{nk}=1|x_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
-&s.t.\;\sum_{k=1}^{K}a_k^{(t+1)}=1
+Q(\theta^{(t+1)},\theta^{(t)})&=E_{Z\sim P(Z_{nk}|\mathbf{x}_n,\theta^{(t)})}log P(X, Z|\theta^{(t+1)})\\
+&=P(Z_{nk}=0|\mathbf{x}_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})+\\
+&\;\;\;\;P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
+&=P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})log P(X, Z|\theta^{(t+1)})\\
+&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\}\\
+&\text{s.t.}\;\sum_{k=1}^{K}a_k^{(t+1)}=1
 \end{aligned}
 $$
 
@@ -689,7 +690,7 @@ Whose Lagrange form is:
 
 $$
 \begin{aligned}
-Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(x_n|\mu_k^{(t+1)}, \sigma_k^{(t+1)})]\}\\
+Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})&=\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})\{log \alpha_k^{(t+1)}+log[\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\}\\
 &\;\;\;\;+\lambda(\sum_{k=1}^{K}a_k^{(t+1)}-1)
 \end{aligned}
 $$
@@ -698,7 +699,7 @@ Solution
 
 $$
 \begin{aligned}
-&\nabla_{\alpha_k^{(t+1)}}Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{a_k^{(t+1)}}+\lambda=0
+&\nabla_{\alpha_k^{(t+1)}}Q_{\lambda}(\theta^{(t+1)},\theta^{(t)})=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{\alpha_k^{(t+1)}}+\lambda=0
 \end{aligned}
 $$
 
@@ -706,7 +707,7 @@ Make use of $\sum_{k=1}^{K}a_k^{(t+1)}=1$, we get:
 
 $$
 \begin{aligned}
-\lambda=-\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
+\lambda=-\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})
 \end{aligned}
 $$
 
@@ -714,56 +715,56 @@ Therefore:
 
 $$
 \begin{aligned}
-\alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{-\lambda}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}\sum_{k=1}^{K}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{\sum_{n=1}^{N}1}\\
-&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})}{N}
+\alpha_k^{(t+1)}&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{-\lambda}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{\sum_{k=1}^{K}\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{\sum_{n=1}^{N}\sum_{k=1}^{K}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{\sum_{n=1}^{N}1}\\
+&=\frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})}{N}
 \end{aligned}
 $$
 
 Solution for $\mu_k^{(t+1)}$ and $(\sigma_k^{(t+1)})^2$:
 1. **Expand Gaussian term**:
-   $$
-   \begin{aligned}
-   \phi(x_n|\theta_k)=\phi(x_n|\mu_k, \sigma_k) = \frac{1}{\sqrt{2\pi}\sigma_k}exp(-\frac{(x_n-\mu_k)^2}{2\sigma_k^2})
-   \end{aligned}
-   $$
+  $$
+  \begin{aligned}
+  \phi(\mathbf{x}_n|\theta_k)=\phi(\mathbf{x}_n|\mathbf{\mu}_k, \mathbf{\sigma}_k) = \frac{1}{\sqrt{2\pi}\mathbf{\sigma}_k}\exp\left(-\frac{(\mathbf{x}_n-\mathbf{\mu}_k)^2}{2\mathbf{\sigma}_k^2}\right)
+  \end{aligned}
+  $$
 
 2. **Take derivative of Q with respect to $\mu_k^{(t+1)}$**:
-   $$
-   \begin{aligned}
-   &\frac{\partial}{\partial \mu_k^{(t+1)}} Q_{\lambda} = \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{\partial}{\partial \mu_k^{(t+1)}}[-\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
-   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{(x_n-\mu_k^{(t+1)})}{(\sigma_k^{(t+1)})^2} = 0
-   \end{aligned}
-   $$
+  $$
+  \begin{aligned}
+  &\frac{\partial}{\partial \mu_k^{(t+1)}} Q_{\lambda} = \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{\partial}{\partial \mu_k^{(t+1)}}[-\frac{(\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
+  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{(\mathbf{x}_n-\mu_k^{(t+1)})}{(\sigma_k^{(t+1)})^2} = 0
+  \end{aligned}
+  $$
 
 3. **Solve for $\mu_k^{(t+1)}$**:
-   $$
-   \begin{aligned}
-   \mu_k^{(t+1)} &= \frac{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})x_n}{\sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})}
-   \end{aligned}
-   $$
+  $$
+  \begin{aligned}
+  \mu_k^{(t+1)} &= \frac{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\mathbf{x}_n}{\sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})}
+  \end{aligned}
+  $$
 
 4. **Take derivative of Q with respect to $(\sigma_k^{(t+1)})^2$**:
-   $$
-   \begin{aligned}
-   &\frac{\partial}{\partial (\sigma_k^{(t+1)})^2} Q_{\lambda} \\
-   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{\partial}{\partial (\sigma_k^{(t+1)})^2}[-\frac{1}{2}log(2\pi(\sigma_k^{(t+1)})^2)-\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
-   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})[-\frac{1}{2(\sigma_k^{(t+1)})^2}+\frac{(x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4}] = 0\\
-   &= \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\theta^{(t)})\frac{-(\sigma_k^{(t+1)})^2 + (x_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4} = 0
-   \end{aligned}
-   $$
+  $$
+  \begin{aligned}
+  &\frac{\partial}{\partial (\sigma_k^{(t+1)})^2} Q_{\lambda} \\
+  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{\partial}{\partial (\sigma_k^{(t+1)})^2}[-\frac{1}{2}log(2\pi(\sigma_k^{(t+1)})^2)-\frac{(\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
+  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})[-\frac{1}{2(\sigma_k^{(t+1)})^2}+\frac{(\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4}] = 0\\
+  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{-(\sigma_k^{(t+1)})^2 + (\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4} = 0
+  \end{aligned}
+  $$
 
 5. **Solve for $(\sigma_k^{(t+1)})^2$**:
 $$
 \begin{aligned}
 (\sigma_k^{(t+1)})^2=\frac
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})(x_n-\mu_k^{(t+1)})^2
+    \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})(\mathbf{x}_n-\mathbf{\mu}_k^{(t+1)})^2
     }
     {
-    \sum_{n=1}^{N}P(Z_{nk}=1|x_n,\alpha^{(t)},\mu^{(t)},\sigma^{(t)})
+    \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})
     }
 \end{aligned}
 $$
@@ -787,7 +788,7 @@ E_{\mathbf{x}\sim X,D\sim \mathbb{D}}&\left[\left[h_{D}(\mathbf{x}) - (f(\mathbf
 \text{where} \\
 &X\text{ is a set of input features for testing.}\\
 &\mathbb{D}\text{ is a collection of datasets for training.}\\
-&\mathbf{x}\text{ is a input feature sampled from }X\\
+&\mathbf{x}\text{ is an input feature sampled from }X\\
 &D\text{ is a training data set sampled from }\mathbb{D}\\
 &h_{D}(\mathbf{x})\text{ is a model trained on }D\\
 &\bar{h}(\mathbf{x})=E_{D\sim \mathbb{D}}\left[h_{D}(\mathbf{x})\right]\\
@@ -800,12 +801,12 @@ The covariance term (third term) of the above equation is $0$ as we show below, 
 
 $$
 \begin{aligned}
-	E_{\mathbf{x}\sim X,D\sim \mathbb{D}}& \left[\left(h_{D}(\mathbf{x}) - \bar{h}(\mathbf{x})\right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right)\right] \\
-    &= E_{\mathbf{x}\sim X} \left[E_{D\sim \mathbb{D}} \left[ h_{D}(\mathbf{x}) - \bar{h}(\mathbf{x})\right] \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right) \right] \\
-    &= E_{\mathbf{x}\sim X} \left[ \left( E_{D\sim \mathbb{D}} \left[ h_{D}(\mathbf{x}) \right] - \bar{h}(\mathbf{x}) \right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon) \right)\right] \\
-    &= E_{\mathbf{x}\sim X} \left[ \left(\bar{h}(\mathbf{x}) - \bar{h}(\mathbf{x}) \right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon) \right)\right] \\
-    &= E_{\mathbf{x}\sim X} \left[ 0 \right] \\
-    &= 0
+E_{\mathbf{x}\sim X,D\sim \mathbb{D}}& \left[\left(h_{D}(\mathbf{x}) - \bar{h}(\mathbf{x})\right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right)\right] \\
+&= E_{\mathbf{x}\sim X} \left[E_{D\sim \mathbb{D}} \left[ h_{D}(\mathbf{x}) - \bar{h}(\mathbf{x})\right] \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon)\right) \right] \\
+&= E_{\mathbf{x}\sim X} \left[ \left( E_{D\sim \mathbb{D}} \left[ h_{D}(\mathbf{x}) \right] - \bar{h}(\mathbf{x}) \right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon) \right)\right] \\
+&= E_{\mathbf{x}\sim X} \left[ \left(\bar{h}(\mathbf{x}) - \bar{h}(\mathbf{x}) \right) \left(\bar{h}(\mathbf{x}) - (f(\mathbf{x})+\epsilon) \right)\right] \\
+&= E_{\mathbf{x}\sim X} \left[ 0 \right] \\
+&= 0
 \end{aligned}
 $$
 
