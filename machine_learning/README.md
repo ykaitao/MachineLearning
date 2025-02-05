@@ -665,11 +665,10 @@ Log likelihood
 
 $$
 \begin{aligned}
-log P(X, Z|\theta^{(t+1)})&=log P(\mathbf{x}_n,Z_n|\mathbf{\mu}^{(t+1)},\mathbf{\sigma}^{(t+1)})\\
-&=log \prod_{n=1}^{N}P(\mathbf{x}_n,Z_n|\mathbf{\mu}^{(t+1)},\mathbf{\sigma}^{(t+1)})\\
-&=log \prod_{n=1}^{N}\prod_{k=1}^{K}[\alpha_k\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]^{Z_{nk}}\\
-&=\sum_{n=1}^{N}\sum_{k=1}^{K}Z_{nk}log [\alpha_k^{(t+1)}\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\\
-&=\sum_{k=1}^{K}\sum_{n=1}^{N}Z_{nk}\{log \alpha_k^{(t+1)}+log[\phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)})]\}\\
+\log P(X, Z|\theta^{(t+1)}) &= \log \prod_{n=1}^{N} P(\mathbf{x}_n, Z_n|\theta^{(t+1)}) \\
+&= \log \prod_{n=1}^{N} \prod_{k=1}^{K} \left[ \alpha_k^{(t+1)} \phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)}) \right]^{Z_{nk}} \\
+&= \sum_{n=1}^{N} \sum_{k=1}^{K} Z_{nk} \log \left[ \alpha_k^{(t+1)} \phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)}) \right] \\
+&= \sum_{k=1}^{K} \sum_{n=1}^{N} Z_{nk} \left[ \log \alpha_k^{(t+1)} + \log \phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)}) \right] \\
 \end{aligned}
 $$
 
