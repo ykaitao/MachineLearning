@@ -730,6 +730,13 @@ Solution for $\mu_k^{(t+1)}$ and $(\sigma_k^{(t+1)})^2$:
   \end{aligned}
   $$
 
+2. **Taking the logarithm of the Gaussian term, we get**:
+
+\[
+\log \phi(\mathbf{x}_n|\mathbf{\mu}_k^{(t+1)}, \mathbf{\sigma}_k^{(t+1)}) = -\frac{1}{2} \log(2\pi (\sigma_k^{(t+1)})^2) - \frac{(\mathbf{x}_n - \mu_k^{(t+1)})^2}{2 (\sigma_k^{(t+1)})^2}
+\]
+
+
 2. **Take derivative of Q with respect to $\mu_k^{(t+1)}$**:
   $$
   \begin{aligned}
@@ -746,27 +753,17 @@ Solution for $\mu_k^{(t+1)}$ and $(\sigma_k^{(t+1)})^2$:
   $$
 
 4. **Take derivative of Q with respect to $(\sigma_k^{(t+1)})^2$**:
-  $$
-  \begin{aligned}
-  &\frac{\partial}{\partial (\sigma_k^{(t+1)})^2} Q_{\lambda} \\
-  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{\partial}{\partial (\sigma_k^{(t+1)})^2}[-\frac{1}{2}log(2\pi(\sigma_k^{(t+1)})^2)-\frac{(\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^2}]\\
-  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})[-\frac{1}{2(\sigma_k^{(t+1)})^2}+\frac{(\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4}] = 0\\
-  &= \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\theta^{(t)})\frac{-(\sigma_k^{(t+1)})^2 + (\mathbf{x}_n-\mu_k^{(t+1)})^2}{2(\sigma_k^{(t+1)})^4} = 0
-  \end{aligned}
-  $$
-
-5. **Solve for $(\sigma_k^{(t+1)})^2$**:
 $$
 \begin{aligned}
-(\sigma_k^{(t+1)})^2=\frac
-    {
-    \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})(\mathbf{x}_n-\mathbf{\mu}_k^{(t+1)})^2
-    }
-    {
-    \sum_{n=1}^{N}P(Z_{nk}=1|\mathbf{x}_n,\alpha^{(t)},\mathbf{\mu}^{(t)},\mathbf{\sigma}^{(t)})
-    }
+&\frac{\partial}{\partial (\sigma_k^{(t+1)})^2} Q(\theta^{(t+1)}, \theta^{(t)}) \\
+&= \sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)}) \frac{\partial}{\partial (\sigma_k^{(t+1)})^2} \left[ -\frac{1}{2} \log(2\pi (\sigma_k^{(t+1)})^2) - \frac{(\mathbf{x}_n - \mu_k^{(t+1)})^2}{2 (\sigma_k^{(t+1)})^2} \right] \\
+&= \sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)}) \left[ -\frac{1}{2 (\sigma_k^{(t+1)})^2} + \frac{(\mathbf{x}_n - \mu_k^{(t+1)})^2}{2 (\sigma_k^{(t+1)})^4} \right] = 0 \\
+&= \sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)}) \frac{-(\sigma_k^{(t+1)})^2 + (\mathbf{x}_n - \mu_k^{(t+1)})^2}{2 (\sigma_k^{(t+1)})^4} = 0 \\
+&\implies \sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)}) \left[ -(\sigma_k^{(t+1)})^2 + (\mathbf{x}_n - \mu_k^{(t+1)})^2 \right] = 0 \\
+&\implies (\sigma_k^{(t+1)})^2 = \frac{\sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)}) (\mathbf{x}_n - \mu_k^{(t+1)})^2}{\sum_{n=1}^{N} P(Z_{nk} = 1|\mathbf{x}_n, \theta^{(t)})}.
 \end{aligned}
 $$
+
 
 # Variance-bias tradeoff
 
